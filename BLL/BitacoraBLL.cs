@@ -1,7 +1,7 @@
-using BE;
-using DAL;
 using System;
 using System.Collections.Generic;
+using BE;
+using DAL;
 
 namespace BLL
 {
@@ -14,26 +14,20 @@ namespace BLL
             bitacoraDAL = new BitacoraDAL();
         }
 
+        public BitacoraBLL(string connectionString)
+        {
+            bitacoraDAL = new BitacoraDAL(connectionString);
+        }
+
         public void Registrar(string usuario, string accion, string modulo, string descripcion)
         {
-            if (string.IsNullOrWhiteSpace(accion))
-            {
-                throw new ArgumentException("La acción es obligatoria.", "accion");
-            }
+            ValidarEvento(accion, modulo);
 
-            if (string.IsNullOrWhiteSpace(modulo))
-            {
-                throw new ArgumentException("El módulo es obligatorio.", "modulo");
-            }
-
-            BitacoraBE bitacora = new BitacoraBE
-            {
-                Fecha = DateTime.Now,
-                Usuario = usuario,
-                Accion = accion.Trim().ToUpper(),
-                Modulo = modulo.Trim(),
-                Descripcion = descripcion
-            };
+            BitacoraBE bitacora = new BitacoraBE();
+            bitacora.Usuario = usuario;
+            bitacora.Accion = accion;
+            bitacora.Modulo = modulo;
+            bitacora.Descripcion = descripcion;
 
             bitacoraDAL.Registrar(bitacora);
         }
@@ -48,15 +42,59 @@ namespace BLL
             Registrar(usuario, "LOGOUT", "Seguridad", "Usuario cerró sesión.");
         }
 
+        public void RegistrarAlta(string usuario, string modulo, string descripcion)
+        {
+            Registrar(usuario, "ALTA", modulo, descripcion);
+        }
+
+        public void RegistrarModificacion(string usuario, string modulo, string descripcion)
+        {
+            Registrar(usuario, "MODIFICACION", modulo, descripcion);
+        }
+
+        public void RegistrarBaja(string usuario, string modulo, string descripcion)
+        {
+            Registrar(usuario, "BAJA", modulo, descripcion);
+        }
+
         public void RegistrarError(string usuario, string modulo, Exception exception)
         {
-            string mensaje = exception == null ? "Error no especificado." : exception.Message;
-            Registrar(usuario, "ERROR", modulo, mensaje);
+            string descripcion = "Error no especificado.";
+
+            if (exception != null)
+            {
+                descripcion = exception.Message;
+            }
+
+            Registrar(usuario, "ERROR", modulo, descripcion);
         }
 
         public List<BitacoraBE> Listar()
         {
             return bitacoraDAL.Listar();
+        }
+
+        public List<BitacoraBE> ListarPorUsuario(string usuario)
+        {
+            if (string.IsNullOrWhiteSpace(usuario))
+            {
+                throw new ArgumentException("El usuario es obligatorio.");
+            }
+
+            return bitacoraDAL.ListarPorUsuario(usuario);
+        }
+
+        private void ValidarEvento(string accion, string modulo)
+        {
+            if (string.IsNullOrWhiteSpace(accion))
+            {
+                throw new ArgumentException("La acción es obligatoria.");
+            }
+
+            if (string.IsNullOrWhiteSpace(modulo))
+            {
+                throw new ArgumentException("El módulo es obligatorio.");
+            }
         }
     }
 }

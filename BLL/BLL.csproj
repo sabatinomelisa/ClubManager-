@@ -41,8 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SessionManagerBLL.cs" />
     <Compile Include="BitacoraBLL.cs" />
+    <Compile Include="SessionManagerBLL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
