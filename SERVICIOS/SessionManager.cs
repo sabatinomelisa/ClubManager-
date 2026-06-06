@@ -7,15 +7,15 @@ using System.Threading.Tasks;
 
 namespace BLL
 {
-    public class SessionManagerBLL
+    public class SessionManager
     {
         private static object _lock = new object();
 
-        private static SessionManagerBLL session;
+        private static SessionManager session;
 
         UsuarioBE Usuario { get; set; }
         public DateTime FechaInicio { get; set; }
-        public static SessionManagerBLL GetInstance
+        public static SessionManager GetInstance
         {
             get
             {
@@ -30,7 +30,7 @@ namespace BLL
             {
                 if (session == null)
                 {
-                    session = new SessionManagerBLL();
+                    session = new SessionManager();
                     session.Usuario = usuario;
                     session.FechaInicio = DateTime.Now;
 
@@ -58,7 +58,7 @@ namespace BLL
             }
 
         }
-        private SessionManagerBLL()
+        private SessionManager()
         {
 
         }
