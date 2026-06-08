@@ -120,7 +120,7 @@ namespace DAL
         {
             SqlParameter parametro = new SqlParameter(nombre, valor);
 
-            parametro.DbType = DbType.Int32;
+            parametro.DbType = DbType.DateTime;
             return parametro;
         }
 

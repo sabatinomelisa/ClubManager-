@@ -33,9 +33,9 @@
             this.txtPassword = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.btnIngresar = new System.Windows.Forms.Button();
+            this.btnRegistrar = new System.Windows.Forms.Button();
+            this.btnOlvidaste = new System.Windows.Forms.Button();
             this.lblMensaje = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
@@ -80,34 +80,34 @@
             this.label3.TabIndex = 4;
             this.label3.Text = "Contraseña";
             // 
-            // button1
+            // btnIngresar
             // 
-            this.button1.Location = new System.Drawing.Point(309, 203);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(269, 31);
-            this.button1.TabIndex = 5;
-            this.button1.Text = "Ingresar";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.btnIngresar.Location = new System.Drawing.Point(309, 203);
+            this.btnIngresar.Name = "btnIngresar";
+            this.btnIngresar.Size = new System.Drawing.Size(269, 31);
+            this.btnIngresar.TabIndex = 5;
+            this.btnIngresar.Text = "Ingresar";
+            this.btnIngresar.UseVisualStyleBackColor = true;
+            this.btnIngresar.Click += new System.EventHandler(this.button1_Click);
             // 
-            // button2
+            // btnRegistrar
             // 
-            this.button2.Location = new System.Drawing.Point(309, 239);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(269, 30);
-            this.button2.TabIndex = 6;
-            this.button2.Text = "Registrar";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.btnRegistrar.Location = new System.Drawing.Point(309, 239);
+            this.btnRegistrar.Name = "btnRegistrar";
+            this.btnRegistrar.Size = new System.Drawing.Size(269, 30);
+            this.btnRegistrar.TabIndex = 6;
+            this.btnRegistrar.Text = "Registrar";
+            this.btnRegistrar.UseVisualStyleBackColor = true;
+            this.btnRegistrar.Click += new System.EventHandler(this.button2_Click);
             // 
-            // button3
+            // btnOlvidaste
             // 
-            this.button3.Location = new System.Drawing.Point(309, 273);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(269, 30);
-            this.button3.TabIndex = 7;
-            this.button3.Text = "¿Olvidaste tu contraseña?";
-            this.button3.UseVisualStyleBackColor = true;
+            this.btnOlvidaste.Location = new System.Drawing.Point(309, 273);
+            this.btnOlvidaste.Name = "btnOlvidaste";
+            this.btnOlvidaste.Size = new System.Drawing.Size(269, 30);
+            this.btnOlvidaste.TabIndex = 7;
+            this.btnOlvidaste.Text = "¿Olvidaste tu contraseña?";
+            this.btnOlvidaste.UseVisualStyleBackColor = true;
             // 
             // lblMensaje
             // 
@@ -123,9 +123,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.lblMensaje);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnOlvidaste);
+            this.Controls.Add(this.btnRegistrar);
+            this.Controls.Add(this.btnIngresar);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.txtPassword);
@@ -146,9 +146,9 @@
         private System.Windows.Forms.TextBox txtPassword;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button btnIngresar;
+        private System.Windows.Forms.Button btnRegistrar;
+        private System.Windows.Forms.Button btnOlvidaste;
         private System.Windows.Forms.Label lblMensaje;
     }
 }
