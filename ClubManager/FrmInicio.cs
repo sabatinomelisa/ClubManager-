@@ -47,9 +47,12 @@ namespace ClubManager
             
         }
 
+        //Boton Registrar
         private void button2_Click(object sender, EventArgs e)
         {
-
+            //Mostrar el FrmRegistro
+            FrmRegistro reg = new FrmRegistro();
+            reg.Show();
 
         }
     }
