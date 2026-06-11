@@ -45,6 +45,7 @@
             this.lblFecNac = new System.Windows.Forms.Label();
             this.txtFecNac = new System.Windows.Forms.TextBox();
             this.btnRegistrar = new System.Windows.Forms.Button();
+            this.lblResultado = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // txtNroDoc
@@ -190,12 +191,21 @@
             this.btnRegistrar.UseVisualStyleBackColor = true;
             this.btnRegistrar.Click += new System.EventHandler(this.btnRegistrar_Click);
             // 
+            // lblResultado
+            // 
+            this.lblResultado.AutoSize = true;
+            this.lblResultado.Location = new System.Drawing.Point(457, 150);
+            this.lblResultado.Name = "lblResultado";
+            this.lblResultado.Size = new System.Drawing.Size(0, 16);
+            this.lblResultado.TabIndex = 17;
+            // 
             // FrmRegistro
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.lblResultado);
             this.Controls.Add(this.btnRegistrar);
             this.Controls.Add(this.lblNacionalidad);
             this.Controls.Add(this.txtNacionalidad);
@@ -214,6 +224,7 @@
             this.Controls.Add(this.cmbTipDoc);
             this.Controls.Add(this.txtNroDoc);
             this.Name = "FrmRegistro";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Registro de Usuario";
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -239,5 +250,6 @@
         private System.Windows.Forms.Label lblFecNac;
         private System.Windows.Forms.TextBox txtFecNac;
         private System.Windows.Forms.Button btnRegistrar;
+        private System.Windows.Forms.Label lblResultado;
     }
 }

@@ -100,6 +100,21 @@ namespace DAL
             return int.Parse(comando.ExecuteScalar().ToString());
         }
 
+        public string DevolverEscalarString(string sql, List<SqlParameter> parameters = null)
+        {
+            SqlCommand comando = CrearComando(sql, parameters);
+
+            object resultado = comando.ExecuteScalar();
+
+            if (resultado == null)
+            {
+                return string.Empty;
+            }
+
+            return resultado.ToString();
+
+        }
+
         public SqlParameter CrearParametro(string nombre, string valor)
         {
             SqlParameter parametro = new SqlParameter(nombre, valor);

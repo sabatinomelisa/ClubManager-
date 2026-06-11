@@ -25,7 +25,7 @@ namespace ClubManager
             {
                 UsuarioBE usr = new UsuarioBE();
 
-                usr.TipoDocumento = cmbTipDoc.Text;
+                usr.TipoDocumento = (cmbTipDoc.Text).ToString();
                 usr.NumeroDocumento = int.Parse(txtNroDoc.Text);
                 usr.Nombre = txtNombre.Text;
                 usr.Apellido = txtApellido.Text;
@@ -37,7 +37,12 @@ namespace ClubManager
                 usr.FechaCreacion = DateTime.Now;
 
                 UsuarioBLL usrBLL = new UsuarioBLL();
-                usrBLL.AltaUsuario(usr);
+                int resultado = usrBLL.AltaUsuario(usr);
+                if(resultado > 0)
+                {
+                    lblResultado.Text = "Alta Exitosa";
+                }
+                
             }catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error en el Resgistro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
