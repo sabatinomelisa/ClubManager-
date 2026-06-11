@@ -27,25 +27,26 @@ namespace ClubManager
             txtUsername.Text=string.Empty;
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            UsuarioBE userActual =new UsuarioBE();
-
-            userActual.Username = txtUsername.Text;
-            userActual.Password = txtPassword.Text;
-            /*agregarbasededtos*/
-
-            try
+            private void button1_Click(object sender, EventArgs e)
             {
-                SessionManager.Login(userActual);
+                UsuarioBE userActual =new UsuarioBE();
+
+                userActual.Username = txtUsername.Text;
+                userActual.Password = txtPassword.Text;
+                /*agregarbasededtos*/
+
+                try
+                {
+                    SessionManager.Login(userActual);
+                    lblMensaje.Text = "Login Exitoso";
             }
-            catch (Exception ex)
-            {
-                lblMensaje.Text = ex.Message;
-            }
+                catch (Exception ex)
+                {
+                    lblMensaje.Text = ex.Message;
+                }
           
             
-        }
+            }
 
         //Boton Registrar
         private void button2_Click(object sender, EventArgs e)
