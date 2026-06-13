@@ -64,5 +64,23 @@ namespace BE
 			set { nacionalidad = value; }
 		}
 
+		private string mail;
+
+		public string Mail
+		{
+			get { return mail; }
+			set { mail = value; }
+		}
+
+		private int telefono;
+
+		public int Telefono
+		{
+			get { return telefono; }
+			set { telefono = value; }
+		}
+
+
+
 	}
 }

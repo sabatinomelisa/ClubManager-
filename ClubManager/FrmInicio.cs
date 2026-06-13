@@ -27,23 +27,36 @@ namespace ClubManager
             txtUsername.Text=string.Empty;
         }
 
-            private void button1_Click(object sender, EventArgs e)
-            {
-                UsuarioBE userActual =new UsuarioBE();
-
-                userActual.Username = txtUsername.Text;
-                userActual.Password = txtPassword.Text;
-                /*agregarbasededtos*/
-
-                try
+        private void button1_Click(object sender, EventArgs e)
+        {
+             try
+             {
+                if (txtUsername.Text != string.Empty && txtPassword.Text != string.Empty)
                 {
-                    SessionManager.Login(userActual);
-                    MessageBox.Show("Login Exitoso");
-                    //Mostrar el FrmRegistro
-                    FrmMenu reg = new FrmMenu();
-                    reg.Show();
 
+                    UsuarioBE userActual = new UsuarioBE();
+                    userActual.Username = txtUsername.Text;
+                    userActual.Password = txtPassword.Text;
+                    UsuarioBLL usrBLL = new UsuarioBLL();
+                    //Valido si la contraseña es correcta
+                    bool usrOk = usrBLL.ValidarUsuario(userActual.Username, userActual.Password);
 
+                    if (usrOk)
+                    {
+                        SessionManager.Login(userActual);
+                        MessageBox.Show("Login Exitoso");
+                        //Mostrar el FrmMenu
+                        FrmMenu reg = new FrmMenu();
+                        reg.Show();
+                    }
+                    else
+                    {
+                        lblMensaje.Text = "Usuario y/o contraseña incorrectas";
+                    }
+                }else
+                {
+                    lblMensaje.Text = "Ingrese Usuario y Contraseña";
+                }
 
             }
             catch (Exception ex)
@@ -72,6 +85,7 @@ namespace ClubManager
 
         private void btnSalir_Click(object sender, EventArgs e)
         {
+            //Salir de la Aplicación
             Application.Exit();
         }
     }

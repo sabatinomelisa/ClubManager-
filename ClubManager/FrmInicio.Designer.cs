@@ -43,7 +43,7 @@
             // txtUsername
             // 
             this.txtUsername.Font = new System.Drawing.Font("Microsoft Tai Le", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtUsername.Location = new System.Drawing.Point(303, 190);
+            this.txtUsername.Location = new System.Drawing.Point(303, 176);
             this.txtUsername.Name = "txtUsername";
             this.txtUsername.Size = new System.Drawing.Size(269, 29);
             this.txtUsername.TabIndex = 1;
@@ -51,7 +51,7 @@
             // txtPassword
             // 
             this.txtPassword.Font = new System.Drawing.Font("Microsoft Tai Le", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPassword.Location = new System.Drawing.Point(303, 226);
+            this.txtPassword.Location = new System.Drawing.Point(303, 212);
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.Size = new System.Drawing.Size(269, 29);
             this.txtPassword.TabIndex = 2;
@@ -62,7 +62,7 @@
             this.lblUsuario.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.lblUsuario.Font = new System.Drawing.Font("Microsoft Tai Le", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblUsuario.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.lblUsuario.Location = new System.Drawing.Point(193, 188);
+            this.lblUsuario.Location = new System.Drawing.Point(193, 174);
             this.lblUsuario.Name = "lblUsuario";
             this.lblUsuario.Size = new System.Drawing.Size(104, 33);
             this.lblUsuario.TabIndex = 3;
@@ -71,7 +71,7 @@
             // btnIngresar
             // 
             this.btnIngresar.Font = new System.Drawing.Font("Microsoft Tai Le", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnIngresar.Location = new System.Drawing.Point(303, 279);
+            this.btnIngresar.Location = new System.Drawing.Point(303, 256);
             this.btnIngresar.Name = "btnIngresar";
             this.btnIngresar.Size = new System.Drawing.Size(269, 31);
             this.btnIngresar.TabIndex = 5;
@@ -82,7 +82,7 @@
             // btnRegistrar
             // 
             this.btnRegistrar.Font = new System.Drawing.Font("Microsoft Tai Le", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRegistrar.Location = new System.Drawing.Point(303, 315);
+            this.btnRegistrar.Location = new System.Drawing.Point(303, 292);
             this.btnRegistrar.Name = "btnRegistrar";
             this.btnRegistrar.Size = new System.Drawing.Size(269, 30);
             this.btnRegistrar.TabIndex = 6;
@@ -93,7 +93,7 @@
             // btnOlvidaste
             // 
             this.btnOlvidaste.Font = new System.Drawing.Font("Microsoft Tai Le", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnOlvidaste.Location = new System.Drawing.Point(303, 350);
+            this.btnOlvidaste.Location = new System.Drawing.Point(303, 327);
             this.btnOlvidaste.Name = "btnOlvidaste";
             this.btnOlvidaste.Size = new System.Drawing.Size(269, 30);
             this.btnOlvidaste.TabIndex = 7;
@@ -104,9 +104,12 @@
             // lblMensaje
             // 
             this.lblMensaje.AutoSize = true;
-            this.lblMensaje.Location = new System.Drawing.Point(97, 338);
+            this.lblMensaje.BackColor = System.Drawing.Color.Transparent;
+            this.lblMensaje.Font = new System.Drawing.Font("Microsoft Tai Le", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMensaje.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.lblMensaje.Location = new System.Drawing.Point(299, 405);
             this.lblMensaje.Name = "lblMensaje";
-            this.lblMensaje.Size = new System.Drawing.Size(0, 16);
+            this.lblMensaje.Size = new System.Drawing.Size(0, 22);
             this.lblMensaje.TabIndex = 8;
             // 
             // label1
@@ -115,7 +118,7 @@
             this.label1.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.label1.Font = new System.Drawing.Font("Microsoft Tai Le", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.label1.Location = new System.Drawing.Point(150, 229);
+            this.label1.Location = new System.Drawing.Point(150, 215);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(147, 33);
             this.label1.TabIndex = 9;
@@ -124,7 +127,7 @@
             // btnSalir
             // 
             this.btnSalir.Font = new System.Drawing.Font("Microsoft Tai Le", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSalir.Location = new System.Drawing.Point(303, 385);
+            this.btnSalir.Location = new System.Drawing.Point(303, 362);
             this.btnSalir.Name = "btnSalir";
             this.btnSalir.Size = new System.Drawing.Size(269, 30);
             this.btnSalir.TabIndex = 10;
