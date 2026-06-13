@@ -35,6 +35,8 @@ namespace ClubManager
                 usr.Password = txtPassword.Text;
                 usr.Bloqueado = "N";
                 usr.FechaCreacion = DateTime.Now;
+                usr.Mail=txtMail.Text;
+                usr.Telefono = int.Parse(txtTelefono.Text);
 
                 UsuarioBLL usrBLL = new UsuarioBLL();
                 int resultado = usrBLL.AltaUsuario(usr);
@@ -62,6 +64,8 @@ namespace ClubManager
             txtNroDoc.Text= string.Empty;
             txtUsuario.Text=string.Empty;
             txtPassword.Text= string.Empty;
+            txtMail.Text= string.Empty;
+            txtTelefono.Text= string.Empty;
         }
 
         private void btnVolver_Click(object sender, EventArgs e)
