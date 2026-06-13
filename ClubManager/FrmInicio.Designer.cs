@@ -37,20 +37,23 @@
             this.btnOlvidaste = new System.Windows.Forms.Button();
             this.lblMensaje = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.btnSalir = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // txtUsername
             // 
-            this.txtUsername.Location = new System.Drawing.Point(303, 220);
+            this.txtUsername.Font = new System.Drawing.Font("Microsoft Tai Le", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtUsername.Location = new System.Drawing.Point(303, 190);
             this.txtUsername.Name = "txtUsername";
-            this.txtUsername.Size = new System.Drawing.Size(269, 22);
+            this.txtUsername.Size = new System.Drawing.Size(269, 29);
             this.txtUsername.TabIndex = 1;
             // 
             // txtPassword
             // 
-            this.txtPassword.Location = new System.Drawing.Point(303, 248);
+            this.txtPassword.Font = new System.Drawing.Font("Microsoft Tai Le", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPassword.Location = new System.Drawing.Point(303, 226);
             this.txtPassword.Name = "txtPassword";
-            this.txtPassword.Size = new System.Drawing.Size(269, 22);
+            this.txtPassword.Size = new System.Drawing.Size(269, 29);
             this.txtPassword.TabIndex = 2;
             // 
             // lblUsuario
@@ -59,7 +62,7 @@
             this.lblUsuario.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.lblUsuario.Font = new System.Drawing.Font("Microsoft Tai Le", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblUsuario.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.lblUsuario.Location = new System.Drawing.Point(193, 212);
+            this.lblUsuario.Location = new System.Drawing.Point(193, 188);
             this.lblUsuario.Name = "lblUsuario";
             this.lblUsuario.Size = new System.Drawing.Size(104, 33);
             this.lblUsuario.TabIndex = 3;
@@ -67,7 +70,8 @@
             // 
             // btnIngresar
             // 
-            this.btnIngresar.Location = new System.Drawing.Point(303, 281);
+            this.btnIngresar.Font = new System.Drawing.Font("Microsoft Tai Le", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnIngresar.Location = new System.Drawing.Point(303, 279);
             this.btnIngresar.Name = "btnIngresar";
             this.btnIngresar.Size = new System.Drawing.Size(269, 31);
             this.btnIngresar.TabIndex = 5;
@@ -77,7 +81,8 @@
             // 
             // btnRegistrar
             // 
-            this.btnRegistrar.Location = new System.Drawing.Point(303, 317);
+            this.btnRegistrar.Font = new System.Drawing.Font("Microsoft Tai Le", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRegistrar.Location = new System.Drawing.Point(303, 315);
             this.btnRegistrar.Name = "btnRegistrar";
             this.btnRegistrar.Size = new System.Drawing.Size(269, 30);
             this.btnRegistrar.TabIndex = 6;
@@ -87,12 +92,14 @@
             // 
             // btnOlvidaste
             // 
-            this.btnOlvidaste.Location = new System.Drawing.Point(303, 351);
+            this.btnOlvidaste.Font = new System.Drawing.Font("Microsoft Tai Le", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnOlvidaste.Location = new System.Drawing.Point(303, 350);
             this.btnOlvidaste.Name = "btnOlvidaste";
             this.btnOlvidaste.Size = new System.Drawing.Size(269, 30);
             this.btnOlvidaste.TabIndex = 7;
             this.btnOlvidaste.Text = "¿Olvidaste tu contraseña?";
             this.btnOlvidaste.UseVisualStyleBackColor = true;
+            this.btnOlvidaste.Click += new System.EventHandler(this.btnOlvidaste_Click);
             // 
             // lblMensaje
             // 
@@ -108,11 +115,22 @@
             this.label1.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.label1.Font = new System.Drawing.Font("Microsoft Tai Le", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.label1.Location = new System.Drawing.Point(150, 245);
+            this.label1.Location = new System.Drawing.Point(150, 229);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(147, 33);
             this.label1.TabIndex = 9;
             this.label1.Text = "Contraseña";
+            // 
+            // btnSalir
+            // 
+            this.btnSalir.Font = new System.Drawing.Font("Microsoft Tai Le", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSalir.Location = new System.Drawing.Point(303, 385);
+            this.btnSalir.Name = "btnSalir";
+            this.btnSalir.Size = new System.Drawing.Size(269, 30);
+            this.btnSalir.TabIndex = 10;
+            this.btnSalir.Text = "Salir";
+            this.btnSalir.UseVisualStyleBackColor = true;
+            this.btnSalir.Click += new System.EventHandler(this.btnSalir_Click);
             // 
             // FrmInicio
             // 
@@ -121,6 +139,7 @@
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnSalir);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.lblMensaje);
             this.Controls.Add(this.btnOlvidaste);
@@ -148,6 +167,7 @@
         private System.Windows.Forms.Button btnOlvidaste;
         private System.Windows.Forms.Label lblMensaje;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btnSalir;
     }
 }
 

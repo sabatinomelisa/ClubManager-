@@ -41,6 +41,7 @@ namespace ClubManager
                 if(resultado > 0)
                 {
                     lblResultado.Text = "Alta Exitosa";
+                    BlanquearCampos();
                 }
                 
             }catch (Exception ex)
@@ -49,6 +50,25 @@ namespace ClubManager
             }
 
 
+        }
+
+        private void BlanquearCampos()
+        {
+            cmbTipDoc.Items.Clear();
+            txtNombre.Text = string.Empty;
+            txtApellido.Text = string.Empty;
+            txtFecNac.Text= string.Empty;
+            txtNacionalidad.Text=string.Empty;
+            txtNroDoc.Text= string.Empty;
+            txtUsuario.Text=string.Empty;
+            txtPassword.Text= string.Empty;
+        }
+
+        private void btnVolver_Click(object sender, EventArgs e)
+        {
+            //Mostrar el FrmInicio
+            FrmInicio ini = new FrmInicio();
+            ini.Show();
         }
     }
 }
