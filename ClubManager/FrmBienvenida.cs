@@ -16,5 +16,11 @@ namespace ClubManager
         {
             InitializeComponent();
         }
+
+
+        private void FrmBienvenida_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

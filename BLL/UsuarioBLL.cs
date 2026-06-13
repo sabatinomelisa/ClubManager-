@@ -90,7 +90,7 @@ namespace BLL
 
         public void Login(string username, string password)
         {
-            UsuarioBE usuario = usrDAL.DevolverUser(username,password);
+            UsuarioBE usuario = usrDAL.DevolverUser(username, password);
 
             if (usuario == null)
                 throw new Exception("Usuario inexistente");
@@ -101,6 +101,28 @@ namespace BLL
                 throw new Exception("Contraseña incorrecta");
 
             SessionManager.Login(usuario);
+        }
+
+        public bool ValidarUsuario(string username, string password)
+        {
+            UsuarioBE usuario = usrDAL.DevolverUser(username, password);
+
+            if (usuario == null)
+                return false;
+
+            bool passok = ValidarPass(password);
+
+            return passok;
+        }
+
+        public int CambiarContraseña(UsuarioBE usr)
+        {
+            UsuarioDAL usrDAL = new UsuarioDAL();
+            
+            int filas = usrDAL.ActPass(usr);
+
+            return filas;
+
         }
     }
 }

@@ -38,9 +38,15 @@ namespace ClubManager
                 try
                 {
                     SessionManager.Login(userActual);
-                    lblMensaje.Text = "Login Exitoso";
+                    MessageBox.Show("Login Exitoso");
+                    //Mostrar el FrmRegistro
+                    FrmMenu reg = new FrmMenu();
+                    reg.Show();
+
+
+
             }
-                catch (Exception ex)
+            catch (Exception ex)
                 {
                     lblMensaje.Text = ex.Message;
                 }
@@ -55,6 +61,18 @@ namespace ClubManager
             FrmRegistro reg = new FrmRegistro();
             reg.Show();
 
+        }
+
+        private void btnOlvidaste_Click(object sender, EventArgs e)
+        {
+            //Mostrar el FrmOlvidaste
+            FrmOlvidaste olv = new FrmOlvidaste();
+            olv.Show();
+        }
+
+        private void btnSalir_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

@@ -12,6 +12,32 @@ namespace DAL
 {
     public class UsuarioDAL
     {
+        public int ActPass(UsuarioBE usr)
+        {
+            Acceso acceso = new Acceso();
+
+            acceso.Conectar();
+
+            List<SqlParameter> parametros = new List<SqlParameter>();
+
+            acceso.IniciarTx();
+
+            try
+            {
+                string sql = "ActualizaPass";
+                parametros.Clear();
+                parametros.Add(acceso.CrearParametro("@usu", usr.Username));
+                parametros.Add(acceso.CrearParametro("@nuevapass",usr.Password));
+                int resultado = acceso.Escribir(sql, parametros);
+                return resultado;
+
+            }
+            catch(Exception ex)
+            {
+                throw new Exception("Error al actualizar contraseña");
+            }
+        }
+
         public int AltaUsuario(UsuarioBE usr)
         {
             Acceso acceso = new Acceso();
