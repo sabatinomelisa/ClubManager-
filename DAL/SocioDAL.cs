@@ -11,9 +11,8 @@ namespace DAL
     public class SocioDAL
     {
 
-        public int AltaSocio(UsuarioBE usr)
+        public int AltaSocio(UsuarioBE usr, Acceso acceso)
         {
-            Acceso acceso = new Acceso();
             List<SqlParameter> parametros = new List<SqlParameter>();
             //Busco el proximo ID del socio para insertar
             string sql = "IdMaximo";

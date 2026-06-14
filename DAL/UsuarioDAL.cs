@@ -56,7 +56,7 @@ namespace DAL
             {
                 SocioDAL socio = new SocioDAL();
 
-                int resultado = socio.AltaSocio(usr);
+                int resultado = socio.AltaSocio(usr, acceso);
 
                 if(resultado != -1)
                 {

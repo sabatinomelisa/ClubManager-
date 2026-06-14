@@ -45,6 +45,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BitacoraBE.cs" />
+    <Compile Include="ComponenteBE.cs" />
+    <Compile Include="IdiomaBE.cs" />
+    <Compile Include="PermisoBE.cs" />
+    <Compile Include="RolBE.cs" />
     <Compile Include="SocioBE.cs" />
     <Compile Include="UsuarioBE.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
