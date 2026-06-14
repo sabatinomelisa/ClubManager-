@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="Acceso.cs" />
     <Compile Include="BitacoraDAL.cs" />
+    <Compile Include="IdiomaDAL.cs" />
     <Compile Include="SocioDAL.cs" />
     <Compile Include="UsuarioDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

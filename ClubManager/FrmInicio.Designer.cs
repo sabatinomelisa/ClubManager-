@@ -38,6 +38,8 @@
             this.lblMensaje = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.btnSalir = new System.Windows.Forms.Button();
+            this.cmbIdiomas = new System.Windows.Forms.ComboBox();
+            this.lblIdioma = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // txtUsername
@@ -55,6 +57,7 @@
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.Size = new System.Drawing.Size(269, 29);
             this.txtPassword.TabIndex = 2;
+            this.txtPassword.UseSystemPasswordChar = true;
             // 
             // lblUsuario
             // 
@@ -135,6 +138,27 @@
             this.btnSalir.UseVisualStyleBackColor = true;
             this.btnSalir.Click += new System.EventHandler(this.btnSalir_Click);
             // 
+            // cmbIdiomas
+            // 
+            this.cmbIdiomas.FormattingEnabled = true;
+            this.cmbIdiomas.Location = new System.Drawing.Point(667, 29);
+            this.cmbIdiomas.Name = "cmbIdiomas";
+            this.cmbIdiomas.Size = new System.Drawing.Size(121, 24);
+            this.cmbIdiomas.TabIndex = 11;
+            this.cmbIdiomas.SelectedIndexChanged += new System.EventHandler(this.cmbIdiomas_SelectedIndexChanged);
+            // 
+            // lblIdioma
+            // 
+            this.lblIdioma.AutoSize = true;
+            this.lblIdioma.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.lblIdioma.Font = new System.Drawing.Font("Microsoft Tai Le", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblIdioma.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.lblIdioma.Location = new System.Drawing.Point(598, 31);
+            this.lblIdioma.Name = "lblIdioma";
+            this.lblIdioma.Size = new System.Drawing.Size(63, 22);
+            this.lblIdioma.TabIndex = 12;
+            this.lblIdioma.Text = "Idioma";
+            // 
             // FrmInicio
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -142,6 +166,8 @@
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.lblIdioma);
+            this.Controls.Add(this.cmbIdiomas);
             this.Controls.Add(this.btnSalir);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.lblMensaje);
@@ -171,6 +197,8 @@
         private System.Windows.Forms.Label lblMensaje;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnSalir;
+        private System.Windows.Forms.ComboBox cmbIdiomas;
+        private System.Windows.Forms.Label lblIdioma;
     }
 }
 

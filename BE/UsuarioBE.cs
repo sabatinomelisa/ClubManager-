@@ -40,6 +40,9 @@ namespace BE
             set { bloqueado = value; }
         }
 
+        public RolBE Rol { get; set; }
+
+
 
     }
 }

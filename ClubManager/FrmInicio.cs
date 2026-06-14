@@ -1,5 +1,7 @@
 ﻿using BE;
 using BLL;
+using SERVICIOS;
+using SERVICIOS.Observer;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,7 +15,7 @@ using System.Windows.Forms;
 
 namespace ClubManager
 {
-    public partial class FrmInicio : Form
+    public partial class FrmInicio : Form, IOberverIdioma
     {
         public FrmInicio()
         {
@@ -25,6 +27,17 @@ namespace ClubManager
             lblMensaje.Text=string.Empty;
             txtPassword.Text=string.Empty;
             txtUsername.Text=string.Empty;
+
+            IdiomaBLL idiomaBLL = new IdiomaBLL();
+
+            List<IdiomaBE> idiomas = idiomaBLL.ListarIdiomas();
+
+            cmbIdiomas.DataSource = idiomas;
+            cmbIdiomas.DisplayMember = "Nombre";
+            cmbIdiomas.ValueMember = "Id";
+
+            //Suscribo al Observer para el cambio de idioma
+            TratamientoIdioma.Instancia.Suscribir(this);
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -87,6 +100,16 @@ namespace ClubManager
         {
             //Salir de la Aplicación
             Application.Exit();
+        }
+
+        public void ActualizarIdioma()
+        {
+            lblUsuario.Text = "User";
+        }
+
+        private void cmbIdiomas_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ActualizarIdioma();
         }
     }
 }
