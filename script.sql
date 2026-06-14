@@ -1,6 +1,6 @@
 USE [master]
 GO
-/****** Object:  Database [Club Manager]    Script Date: 11/6/2026 20:05:38 ******/
+/****** Object:  Database [Club Manager]    Script Date: 14/6/2026 20:07:40 ******/
 CREATE DATABASE [Club Manager]
  CONTAINMENT = NONE
  ON  PRIMARY 
@@ -77,7 +77,7 @@ ALTER DATABASE [Club Manager] SET QUERY_STORE (OPERATION_MODE = READ_WRITE, CLEA
 GO
 USE [Club Manager]
 GO
-/****** Object:  Table [dbo].[Bitacora]    Script Date: 11/6/2026 20:05:38 ******/
+/****** Object:  Table [dbo].[Bitacora]    Script Date: 14/6/2026 20:07:40 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -94,7 +94,52 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Socio]    Script Date: 11/6/2026 20:05:38 ******/
+/****** Object:  Table [dbo].[HistorialSocio]    Script Date: 14/6/2026 20:07:41 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[HistorialSocio](
+	[IdHistorico] [int] NOT NULL,
+	[IdSocio] [int] NOT NULL,
+	[Email] [varchar](1000) NOT NULL,
+	[FechaCreacion] [datetime] NOT NULL,
+ CONSTRAINT [PK_HistorialSocio] PRIMARY KEY CLUSTERED 
+(
+	[IdSocio] ASC,
+	[IdHistorico] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Idioma]    Script Date: 14/6/2026 20:07:41 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Idioma](
+	[Id] [int] NOT NULL,
+	[NombreIdioma] [nvarchar](50) NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Rol]    Script Date: 14/6/2026 20:07:41 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Rol](
+	[IdRol] [int] NOT NULL,
+	[Nombre] [nvarchar](50) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[IdRol] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Socio]    Script Date: 14/6/2026 20:07:41 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -107,13 +152,36 @@ CREATE TABLE [dbo].[Socio](
 	[Apellido] [varchar](50) NOT NULL,
 	[FechaNacimiento] [date] NOT NULL,
 	[Nacionalidad] [varchar](30) NOT NULL,
+	[Email] [varchar](100) NOT NULL,
+	[Telefono] [bigint] NOT NULL,
 PRIMARY KEY CLUSTERED 
 (
 	[IdSocio] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Usuario]    Script Date: 11/6/2026 20:05:38 ******/
+/****** Object:  Table [dbo].[Traduccion]    Script Date: 14/6/2026 20:07:41 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Traduccion](
+	[Id] [int] NOT NULL,
+	[NombreControl] [nvarchar](100) NOT NULL,
+	[IdIdioma] [int] NOT NULL,
+	[Traduccion] [nvarchar](255) NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [UQ_Traduccion] UNIQUE NONCLUSTERED 
+(
+	[NombreControl] ASC,
+	[IdIdioma] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Usuario]    Script Date: 14/6/2026 20:07:41 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -124,18 +192,43 @@ CREATE TABLE [dbo].[Usuario](
 	[Contraseña] [nvarchar](255) NOT NULL,
 	[FechaCreacion] [datetime] NOT NULL,
 	[Bloqueado] [char](1) NOT NULL,
+	[IdRol] [int] NOT NULL,
  CONSTRAINT [PK_Usuario] PRIMARY KEY CLUSTERED 
 (
 	[IdSocio] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
+ALTER TABLE [dbo].[HistorialSocio]  WITH CHECK ADD  CONSTRAINT [FK_HistorialSocio_Socio] FOREIGN KEY([IdSocio])
+REFERENCES [dbo].[Socio] ([IdSocio])
+GO
+ALTER TABLE [dbo].[HistorialSocio] CHECK CONSTRAINT [FK_HistorialSocio_Socio]
+GO
+ALTER TABLE [dbo].[Traduccion]  WITH CHECK ADD  CONSTRAINT [FK_Traduccion_Idioma] FOREIGN KEY([IdIdioma])
+REFERENCES [dbo].[Idioma] ([Id])
+GO
+ALTER TABLE [dbo].[Traduccion] CHECK CONSTRAINT [FK_Traduccion_Idioma]
+GO
 ALTER TABLE [dbo].[Usuario]  WITH CHECK ADD  CONSTRAINT [FK_Usuario_Socio] FOREIGN KEY([IdSocio])
 REFERENCES [dbo].[Socio] ([IdSocio])
 GO
 ALTER TABLE [dbo].[Usuario] CHECK CONSTRAINT [FK_Usuario_Socio]
 GO
-/****** Object:  StoredProcedure [dbo].[ConsultaDocu]    Script Date: 11/6/2026 20:05:38 ******/
+/****** Object:  StoredProcedure [dbo].[ActualizaPass]    Script Date: 14/6/2026 20:07:41 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[ActualizaPass]
+@usu varchar(50),@nuevapass nvarchar(255)
+AS
+BEGIN
+UPDATE Usuario
+SET Contraseña=@nuevapass
+WHERE NombreUsuario=@usu
+END
+GO
+/****** Object:  StoredProcedure [dbo].[ConsultaDocu]    Script Date: 14/6/2026 20:07:41 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -150,7 +243,33 @@ WHERE TipoDocumento = @tipo
 AND NumeroDocumento = @nro
 END
 GO
-/****** Object:  StoredProcedure [dbo].[ConsultaUsrPass]    Script Date: 11/6/2026 20:05:38 ******/
+/****** Object:  StoredProcedure [dbo].[ConsultaIdiomas]    Script Date: 14/6/2026 20:07:41 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[ConsultaIdiomas]
+AS
+BEGIN
+SELECT Id, NombreIdioma
+FROM Idioma
+END
+GO
+/****** Object:  StoredProcedure [dbo].[ConsultaPass]    Script Date: 14/6/2026 20:07:41 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[ConsultaPass]
+@usu varchar(20)
+AS
+BEGIN
+SELECT Contraseña
+FROM Usuario
+WHERE NombreUsuario=@usu
+END
+GO
+/****** Object:  StoredProcedure [dbo].[ConsultaUsrPass]    Script Date: 14/6/2026 20:07:41 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -165,7 +284,7 @@ WHERE NombreUsuario=@usu
 AND Contraseña=@pass
 END
 GO
-/****** Object:  StoredProcedure [dbo].[ConsultaUsuario]    Script Date: 11/6/2026 20:05:38 ******/
+/****** Object:  StoredProcedure [dbo].[ConsultaUsuario]    Script Date: 14/6/2026 20:07:41 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -179,7 +298,7 @@ FROM Usuario
 WHERE NombreUsuario=@usu
 END
 GO
-/****** Object:  StoredProcedure [dbo].[IdMAximo]    Script Date: 11/6/2026 20:05:38 ******/
+/****** Object:  StoredProcedure [dbo].[IdMAximo]    Script Date: 14/6/2026 20:07:41 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -191,7 +310,7 @@ SELECT ISNULL(MAX(IdSocio),0)+1
 FROM Socio
 END
 GO
-/****** Object:  StoredProcedure [dbo].[RegistrarSocio]    Script Date: 11/6/2026 20:05:38 ******/
+/****** Object:  StoredProcedure [dbo].[RegistrarSocio]    Script Date: 14/6/2026 20:07:41 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -203,13 +322,15 @@ CREATE PROCEDURE [dbo].[RegistrarSocio]
 @nombre varchar(50),
 @apellido varchar(50),
 @fecNac Datetime,
-@nacionalidad varchar(50)
+@nacionalidad varchar(50),
+@mail varchar(50),
+@telefono int
 AS
 BEGIN
-INSERT INTO Socio VALUES (@idsocio,@tipDoc, @nroDoc,@nombre,@apellido,@fecNac,@nacionalidad)
+INSERT INTO Socio VALUES (@idsocio,@tipDoc, @nroDoc,@nombre,@apellido,@fecNac,@nacionalidad,@mail,@telefono)
 END
 GO
-/****** Object:  StoredProcedure [dbo].[RegistrarUsuario]    Script Date: 11/6/2026 20:05:38 ******/
+/****** Object:  StoredProcedure [dbo].[RegistrarUsuario]    Script Date: 14/6/2026 20:07:41 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
