@@ -36,7 +36,7 @@
             this.btnRegistrar = new System.Windows.Forms.Button();
             this.btnOlvidaste = new System.Windows.Forms.Button();
             this.lblMensaje = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblContraseña = new System.Windows.Forms.Label();
             this.btnSalir = new System.Windows.Forms.Button();
             this.cmbIdiomas = new System.Windows.Forms.ComboBox();
             this.lblIdioma = new System.Windows.Forms.Label();
@@ -115,17 +115,17 @@
             this.lblMensaje.Size = new System.Drawing.Size(0, 22);
             this.lblMensaje.TabIndex = 8;
             // 
-            // label1
+            // lblContraseña
             // 
-            this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label1.Font = new System.Drawing.Font("Microsoft Tai Le", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.label1.Location = new System.Drawing.Point(150, 215);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(147, 33);
-            this.label1.TabIndex = 9;
-            this.label1.Text = "Contraseña";
+            this.lblContraseña.AutoSize = true;
+            this.lblContraseña.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.lblContraseña.Font = new System.Drawing.Font("Microsoft Tai Le", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblContraseña.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.lblContraseña.Location = new System.Drawing.Point(150, 215);
+            this.lblContraseña.Name = "lblContraseña";
+            this.lblContraseña.Size = new System.Drawing.Size(147, 33);
+            this.lblContraseña.TabIndex = 9;
+            this.lblContraseña.Text = "Contraseña";
             // 
             // btnSalir
             // 
@@ -153,7 +153,7 @@
             this.lblIdioma.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.lblIdioma.Font = new System.Drawing.Font("Microsoft Tai Le", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblIdioma.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.lblIdioma.Location = new System.Drawing.Point(598, 31);
+            this.lblIdioma.Location = new System.Drawing.Point(567, 31);
             this.lblIdioma.Name = "lblIdioma";
             this.lblIdioma.Size = new System.Drawing.Size(63, 22);
             this.lblIdioma.TabIndex = 12;
@@ -169,7 +169,7 @@
             this.Controls.Add(this.lblIdioma);
             this.Controls.Add(this.cmbIdiomas);
             this.Controls.Add(this.btnSalir);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lblContraseña);
             this.Controls.Add(this.lblMensaje);
             this.Controls.Add(this.btnOlvidaste);
             this.Controls.Add(this.btnRegistrar);
@@ -195,7 +195,7 @@
         private System.Windows.Forms.Button btnRegistrar;
         private System.Windows.Forms.Button btnOlvidaste;
         private System.Windows.Forms.Label lblMensaje;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblContraseña;
         private System.Windows.Forms.Button btnSalir;
         private System.Windows.Forms.ComboBox cmbIdiomas;
         private System.Windows.Forms.Label lblIdioma;

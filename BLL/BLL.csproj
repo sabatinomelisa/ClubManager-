@@ -48,6 +48,7 @@
     <Compile Include="IdiomaBLL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SocioBLL.cs" />
+    <Compile Include="TraduccionBLL.cs" />
     <Compile Include="UsuarioBLL.cs" />
   </ItemGroup>
   <ItemGroup>

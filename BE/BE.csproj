@@ -50,6 +50,7 @@
     <Compile Include="PermisoBE.cs" />
     <Compile Include="RolBE.cs" />
     <Compile Include="SocioBE.cs" />
+    <Compile Include="TraduccionBE.cs" />
     <Compile Include="UsuarioBE.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
