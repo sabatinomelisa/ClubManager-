@@ -17,6 +17,7 @@ namespace ClubManager
 {
     public partial class FrmInicio : Form, IOberverIdioma
     {
+        bool cargando = true;
         public FrmInicio()
         {
             InitializeComponent();
@@ -36,6 +37,7 @@ namespace ClubManager
             cmbIdiomas.DisplayMember = "Nombre";
             cmbIdiomas.ValueMember = "Id";
 
+            cargando = false;
             //Suscribo al Observer para el cambio de idioma
             TratamientoIdioma.Instancia.Suscribir(this);
         }
@@ -104,12 +106,60 @@ namespace ClubManager
 
         public void ActualizarIdioma()
         {
-            lblUsuario.Text = "User";
+            List<TraduccionBE> traducciones = new List<TraduccionBE>();
+
+            TraduccionBLL tradBLL = new TraduccionBLL();
+            int idiomaSel = (int)cmbIdiomas.SelectedValue;
+
+
+            traducciones = tradBLL.Listar(idiomaSel);
+
+            foreach(var tr in traducciones)
+            {
+                switch (tr.NombreControl)
+                {
+                    case "lblUsuario":
+                        lblUsuario.Text = tr.Traduccion;
+                        break;
+
+                    case "lblContraseña":
+                        lblContraseña.Text = tr.Traduccion;
+                        break;
+
+                    case "btnIngresar":
+                        btnIngresar.Text = tr.Traduccion;
+                        break;
+
+                    case "btnRegistrar":
+                        btnRegistrar.Text = tr.Traduccion;
+                        break;
+
+                    case "btnOlvidaste":
+                        btnOlvidaste.Text = tr.Traduccion;
+                        break;
+
+                    case "btnSalir":
+                        btnSalir.Text = tr.Traduccion;
+                        break;
+
+                    case "lblIdioma":
+                        lblIdioma.Text = tr.Traduccion;
+                        break;
+
+
+                }
+            }
+
         }
 
         private void cmbIdiomas_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ActualizarIdioma();
+            if (cargando) return;
+
+            IdiomaBE idioma = (IdiomaBE)cmbIdiomas.SelectedItem;
+
+            TratamientoIdioma.Instancia.IdiomaActual = idioma;
+            TratamientoIdioma.Instancia.Notificar();
         }
     }
 }
