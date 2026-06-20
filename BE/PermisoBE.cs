@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BE
 {
-    internal class PermisoBE:ComponenteBE
+    public class PermisoBE:ComponenteBE
     {
     }
 }

@@ -6,9 +6,14 @@ using System.Threading.Tasks;
 
 namespace BE
 {
-    public class RolBE
+    public class RolBE : ComponenteBE
     {
         public List<ComponenteBE> Hijos { get; set; }
+
+        public RolBE()
+        {
+            Hijos = new List<ComponenteBE>();
+        }
 
     }
 
