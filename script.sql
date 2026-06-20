@@ -1,6 +1,6 @@
 USE [master]
 GO
-/****** Object:  Database [Club Manager]    Script Date: 14/6/2026 20:07:40 ******/
+/****** Object:  Database [Club Manager]    Script Date: 20/6/2026 20:24:57 ******/
 CREATE DATABASE [Club Manager]
  CONTAINMENT = NONE
  ON  PRIMARY 
@@ -77,7 +77,7 @@ ALTER DATABASE [Club Manager] SET QUERY_STORE (OPERATION_MODE = READ_WRITE, CLEA
 GO
 USE [Club Manager]
 GO
-/****** Object:  Table [dbo].[Bitacora]    Script Date: 14/6/2026 20:07:40 ******/
+/****** Object:  Table [dbo].[Bitacora]    Script Date: 20/6/2026 20:24:57 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -94,7 +94,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[HistorialSocio]    Script Date: 14/6/2026 20:07:41 ******/
+/****** Object:  Table [dbo].[HistorialSocio]    Script Date: 20/6/2026 20:24:58 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -111,7 +111,7 @@ CREATE TABLE [dbo].[HistorialSocio](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Idioma]    Script Date: 14/6/2026 20:07:41 ******/
+/****** Object:  Table [dbo].[Idioma]    Script Date: 20/6/2026 20:24:58 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -125,7 +125,21 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Rol]    Script Date: 14/6/2026 20:07:41 ******/
+/****** Object:  Table [dbo].[Permiso]    Script Date: 20/6/2026 20:24:58 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Permiso](
+	[IdPermiso] [int] NOT NULL,
+	[Nombre] [nvarchar](100) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[IdPermiso] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Rol]    Script Date: 20/6/2026 20:24:58 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -139,7 +153,22 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Socio]    Script Date: 14/6/2026 20:07:41 ******/
+/****** Object:  Table [dbo].[RolPermiso]    Script Date: 20/6/2026 20:24:58 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[RolPermiso](
+	[IdRol] [int] NOT NULL,
+	[IdPermiso] [int] NOT NULL,
+ CONSTRAINT [PK_RolPermiso] PRIMARY KEY CLUSTERED 
+(
+	[IdRol] ASC,
+	[IdPermiso] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Socio]    Script Date: 20/6/2026 20:24:58 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -160,7 +189,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Traduccion]    Script Date: 14/6/2026 20:07:41 ******/
+/****** Object:  Table [dbo].[Traduccion]    Script Date: 20/6/2026 20:24:58 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -181,7 +210,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Usuario]    Script Date: 14/6/2026 20:07:41 ******/
+/****** Object:  Table [dbo].[Usuario]    Script Date: 20/6/2026 20:24:58 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -204,6 +233,16 @@ REFERENCES [dbo].[Socio] ([IdSocio])
 GO
 ALTER TABLE [dbo].[HistorialSocio] CHECK CONSTRAINT [FK_HistorialSocio_Socio]
 GO
+ALTER TABLE [dbo].[RolPermiso]  WITH CHECK ADD  CONSTRAINT [FK_RolPermiso_Permiso] FOREIGN KEY([IdPermiso])
+REFERENCES [dbo].[Permiso] ([IdPermiso])
+GO
+ALTER TABLE [dbo].[RolPermiso] CHECK CONSTRAINT [FK_RolPermiso_Permiso]
+GO
+ALTER TABLE [dbo].[RolPermiso]  WITH CHECK ADD  CONSTRAINT [FK_RolPermiso_Rol] FOREIGN KEY([IdRol])
+REFERENCES [dbo].[Rol] ([IdRol])
+GO
+ALTER TABLE [dbo].[RolPermiso] CHECK CONSTRAINT [FK_RolPermiso_Rol]
+GO
 ALTER TABLE [dbo].[Traduccion]  WITH CHECK ADD  CONSTRAINT [FK_Traduccion_Idioma] FOREIGN KEY([IdIdioma])
 REFERENCES [dbo].[Idioma] ([Id])
 GO
@@ -214,7 +253,7 @@ REFERENCES [dbo].[Socio] ([IdSocio])
 GO
 ALTER TABLE [dbo].[Usuario] CHECK CONSTRAINT [FK_Usuario_Socio]
 GO
-/****** Object:  StoredProcedure [dbo].[ActualizaPass]    Script Date: 14/6/2026 20:07:41 ******/
+/****** Object:  StoredProcedure [dbo].[ActualizaPass]    Script Date: 20/6/2026 20:24:58 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -228,7 +267,7 @@ SET Contraseña=@nuevapass
 WHERE NombreUsuario=@usu
 END
 GO
-/****** Object:  StoredProcedure [dbo].[ConsultaDocu]    Script Date: 14/6/2026 20:07:41 ******/
+/****** Object:  StoredProcedure [dbo].[ConsultaDocu]    Script Date: 20/6/2026 20:24:58 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -243,7 +282,7 @@ WHERE TipoDocumento = @tipo
 AND NumeroDocumento = @nro
 END
 GO
-/****** Object:  StoredProcedure [dbo].[ConsultaIdiomas]    Script Date: 14/6/2026 20:07:41 ******/
+/****** Object:  StoredProcedure [dbo].[ConsultaIdiomas]    Script Date: 20/6/2026 20:24:58 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -255,7 +294,7 @@ SELECT Id, NombreIdioma
 FROM Idioma
 END
 GO
-/****** Object:  StoredProcedure [dbo].[ConsultaPass]    Script Date: 14/6/2026 20:07:41 ******/
+/****** Object:  StoredProcedure [dbo].[ConsultaPass]    Script Date: 20/6/2026 20:24:58 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -269,7 +308,21 @@ FROM Usuario
 WHERE NombreUsuario=@usu
 END
 GO
-/****** Object:  StoredProcedure [dbo].[ConsultaUsrPass]    Script Date: 14/6/2026 20:07:41 ******/
+/****** Object:  StoredProcedure [dbo].[ConsultaTraducciones]    Script Date: 20/6/2026 20:24:58 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[ConsultaTraducciones]
+@id int
+AS
+BEGIN
+SELECT Id, NombreControl, Traduccion
+FROM Traduccion
+WHERE IdIdioma = @id
+END
+GO
+/****** Object:  StoredProcedure [dbo].[ConsultaUsrPass]    Script Date: 20/6/2026 20:24:58 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -284,7 +337,7 @@ WHERE NombreUsuario=@usu
 AND Contraseña=@pass
 END
 GO
-/****** Object:  StoredProcedure [dbo].[ConsultaUsuario]    Script Date: 14/6/2026 20:07:41 ******/
+/****** Object:  StoredProcedure [dbo].[ConsultaUsuario]    Script Date: 20/6/2026 20:24:58 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -298,7 +351,7 @@ FROM Usuario
 WHERE NombreUsuario=@usu
 END
 GO
-/****** Object:  StoredProcedure [dbo].[IdMAximo]    Script Date: 14/6/2026 20:07:41 ******/
+/****** Object:  StoredProcedure [dbo].[IdMAximo]    Script Date: 20/6/2026 20:24:58 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -310,7 +363,7 @@ SELECT ISNULL(MAX(IdSocio),0)+1
 FROM Socio
 END
 GO
-/****** Object:  StoredProcedure [dbo].[RegistrarSocio]    Script Date: 14/6/2026 20:07:41 ******/
+/****** Object:  StoredProcedure [dbo].[RegistrarSocio]    Script Date: 20/6/2026 20:24:58 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -330,7 +383,7 @@ BEGIN
 INSERT INTO Socio VALUES (@idsocio,@tipDoc, @nroDoc,@nombre,@apellido,@fecNac,@nacionalidad,@mail,@telefono)
 END
 GO
-/****** Object:  StoredProcedure [dbo].[RegistrarUsuario]    Script Date: 14/6/2026 20:07:41 ******/
+/****** Object:  StoredProcedure [dbo].[RegistrarUsuario]    Script Date: 20/6/2026 20:24:58 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
