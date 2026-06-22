@@ -46,7 +46,9 @@
   <ItemGroup>
     <Compile Include="Acceso.cs" />
     <Compile Include="BitacoraDAL.cs" />
+    <Compile Include="HistorialDAL.cs" />
     <Compile Include="IdiomaDAL.cs" />
+    <Compile Include="PermisoDAL.cs" />
     <Compile Include="RolDAL.cs" />
     <Compile Include="SocioDAL.cs" />
     <Compile Include="TraduccionDAL.cs" />

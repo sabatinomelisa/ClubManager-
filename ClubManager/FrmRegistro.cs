@@ -103,6 +103,14 @@ namespace ClubManager
             cargando = false;
             //Suscribo al Observer para el cambio de idioma
             TratamientoIdioma.Instancia.Suscribir(this);
+
+            if (TratamientoIdioma.Instancia.IdiomaActual != null)
+            {
+                cmbIdiomas.SelectedValue =
+                    TratamientoIdioma.Instancia.IdiomaActual.Id;
+
+                ActualizarIdioma();
+            }
         }
 
 
@@ -111,8 +119,7 @@ namespace ClubManager
             List<TraduccionBE> traducciones = new List<TraduccionBE>();
 
             TraduccionBLL tradBLL = new TraduccionBLL();
-            int idiomaSel = (int)cmbIdiomas.SelectedValue;
-
+            int idiomaSel = TratamientoIdioma.Instancia.IdiomaActual.Id;
 
             traducciones = tradBLL.Listar(idiomaSel);
 
