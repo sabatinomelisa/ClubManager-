@@ -84,11 +84,14 @@ namespace BLL
             return bitacoraDAL.ListarPorUsuario(usuario);
         }
 
+<<<<<<< HEAD
         public List<BitacoraBE> Buscar(string usuario, string accion, string modulo, DateTime? fechaDesde, DateTime? fechaHasta)
         {
             return bitacoraDAL.Buscar(usuario, accion, modulo, fechaDesde, fechaHasta);
         }
 
+=======
+>>>>>>> origin/main
         private void ValidarEvento(string accion, string modulo)
         {
             if (string.IsNullOrWhiteSpace(accion))

@@ -1,13 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+<<<<<<< HEAD
 using System.Text.RegularExpressions;
 using BE;
 using DAL;
+=======
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+>>>>>>> origin/main
 
 namespace BLL
 {
     public class SocioBLL
     {
+<<<<<<< HEAD
         private readonly SocioDAL socioDAL;
         private readonly ControlCambioBLL controlCambioBLL;
         private readonly BitacoraBLL bitacoraBLL;
@@ -129,5 +136,7 @@ namespace BLL
                 socio.Activo = "S";
             }
         }
+=======
+>>>>>>> origin/main
     }
 }

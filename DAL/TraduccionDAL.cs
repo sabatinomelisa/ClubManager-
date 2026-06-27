@@ -3,6 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+<<<<<<< HEAD
+=======
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+>>>>>>> origin/main
 
 namespace DAL
 {
@@ -11,6 +17,7 @@ namespace DAL
         public List<TraduccionBE> ListarTraducciones(int idiomaSel)
         {
             Acceso acceso = new Acceso();
+<<<<<<< HEAD
             List<TraduccionBE> traducciones = new List<TraduccionBE>();
 
             acceso.Conectar();
@@ -49,5 +56,31 @@ namespace DAL
                 acceso.Desconectar();
             }
         }
+=======
+
+            List<TraduccionBE> traducciones = new List<TraduccionBE>();
+
+            acceso.Conectar();
+            string sql = "ConsultaTraducciones";
+            List<SqlParameter> parametros = new List<SqlParameter>();
+            DataTable tabla = new DataTable();
+
+            parametros.Add(acceso.CrearParametro("@id", idiomaSel));
+            tabla= acceso.Leer(sql, parametros);
+
+            foreach (DataRow row in tabla.Rows)
+            {
+                TraduccionBE tradAux = new TraduccionBE();
+                tradAux.Id=int.Parse(row["Id"].ToString());
+                tradAux.NombreControl = row["NombreControl"].ToString();
+                tradAux.Traduccion = row["Traduccion"].ToString();
+                traducciones.Add(tradAux);
+            }
+
+            acceso.Desconectar();
+
+            return traducciones;
+        }
+>>>>>>> origin/main
     }
 }

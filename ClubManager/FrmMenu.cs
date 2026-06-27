@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
@@ -9,10 +10,26 @@ using SERVICIOS.Observer;
 namespace ClubManager
 {
     public partial class FrmMenu : Form, IOberverIdioma
+=======
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace ClubManager
+{
+    public partial class FrmMenu : Form
+>>>>>>> origin/main
     {
         public FrmMenu()
         {
             InitializeComponent();
+<<<<<<< HEAD
             ConfigurarMenuPrincipal();
             TratamientoIdioma.Instancia.Suscribir(this);
             if (TratamientoIdioma.Instancia.IdiomaActual != null)
@@ -221,6 +238,8 @@ namespace ClubManager
             }
 
             base.OnFormClosing(e);
+=======
+>>>>>>> origin/main
         }
     }
 }

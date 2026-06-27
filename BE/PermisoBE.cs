@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 using System;
 using System.Collections.Generic;
 
@@ -24,5 +25,17 @@ namespace BE
         {
             return new List<ComponenteBE>().AsReadOnly();
         }
+=======
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace BE
+{
+    public class PermisoBE:ComponenteBE
+    {
+>>>>>>> origin/main
     }
 }

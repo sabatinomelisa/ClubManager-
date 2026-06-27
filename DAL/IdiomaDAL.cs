@@ -2,7 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+<<<<<<< HEAD
 using System.Data.SqlClient;
+=======
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+>>>>>>> origin/main
 
 namespace DAL
 {
@@ -14,11 +20,21 @@ namespace DAL
             List<IdiomaBE> idiomas = new List<IdiomaBE>();
 
             acceso.Conectar();
+<<<<<<< HEAD
             DataTable respuesta = acceso.Leer("ConsultaIdiomas");
+=======
+
+            string sql = "ConsultaIdiomas";
+            
+            DataTable respuesta = new DataTable();
+
+            respuesta = acceso.Leer(sql);
+>>>>>>> origin/main
 
             foreach (DataRow row in respuesta.Rows)
             {
                 IdiomaBE idioma = new IdiomaBE();
+<<<<<<< HEAD
                 idioma.Id = int.Parse(row["Id"].ToString());
                 idioma.Nombre = row["NombreIdioma"].ToString();
                 idiomas.Add(idioma);
@@ -44,5 +60,17 @@ namespace DAL
                 acceso.Desconectar();
             }
         }
+=======
+                idioma.Id =int.Parse( row["Id"].ToString());
+                idioma.Nombre = row["NombreIdioma"].ToString();
+                idiomas.Add(idioma);
+
+            }
+
+            acceso.Desconectar();
+
+            return idiomas;
+        }
+>>>>>>> origin/main
     }
 }

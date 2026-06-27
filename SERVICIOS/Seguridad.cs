@@ -1,11 +1,22 @@
+<<<<<<< HEAD
 using System;
 using System.Security.Cryptography;
 using System.Text;
+=======
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using BCrypt.Net;
+
+>>>>>>> origin/main
 
 namespace SERVICIOS
 {
     public class Seguridad
     {
+<<<<<<< HEAD
         private const string SaltAplicacion = "ClubManagerPlus2026";
 
         public static string GenerarHash(string password)
@@ -40,6 +51,16 @@ namespace SERVICIOS
 
             string hashCalculado = GenerarHash(password);
             return string.Equals(hashCalculado, hashGuardado, StringComparison.OrdinalIgnoreCase);
+=======
+        public static string GenerarHash(string password)
+        {
+            return BCrypt.Net.BCrypt.HashPassword(password);
+        }
+
+        public static bool VerificarPassword(string password, string hash)
+        {
+            return BCrypt.Net.BCrypt.Verify(password, hash);
+>>>>>>> origin/main
         }
     }
 }

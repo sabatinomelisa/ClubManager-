@@ -7,17 +7,23 @@ namespace ClubManager
     public partial class FrmBitacora : Form
     {
         private readonly BitacoraBLL bitacoraBLL;
+<<<<<<< HEAD
         private TextBox txtFiltroUsuario;
         private TextBox txtFiltroAccion;
         private TextBox txtFiltroModulo;
         private Button btnBuscar;
         private Button btnLimpiarFiltros;
+=======
+>>>>>>> origin/main
 
         public FrmBitacora()
         {
             InitializeComponent();
             bitacoraBLL = new BitacoraBLL();
+<<<<<<< HEAD
             ConfigurarFiltros();
+=======
+>>>>>>> origin/main
         }
 
         private void FrmBitacora_Load(object sender, EventArgs e)
@@ -38,6 +44,7 @@ namespace ClubManager
                 CargarBitacora();
                 MessageBox.Show("Registro creado correctamente.");
             }
+<<<<<<< HEAD
             catch (Exception exception)
             {
                 MessageBox.Show(exception.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -70,6 +77,14 @@ namespace ClubManager
             CargarBitacora();
         }
 
+=======
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+>>>>>>> origin/main
         private void CargarBitacora()
         {
             try
@@ -77,6 +92,7 @@ namespace ClubManager
                 dgvBitacora.AutoGenerateColumns = true;
                 dgvBitacora.DataSource = bitacoraBLL.Listar();
             }
+<<<<<<< HEAD
             catch (Exception exception)
             {
                 MessageBox.Show(exception.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -154,5 +170,12 @@ namespace ClubManager
 
             return valor.Trim();
         }
+=======
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+>>>>>>> origin/main
     }
 }
