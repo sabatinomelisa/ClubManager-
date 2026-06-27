@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+using System;
+using System.Windows.Forms;
+using BLL;
+=======
 ﻿using BE;
 using BLL;
 using System;
@@ -9,6 +14,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+>>>>>>> origin/main
 
 namespace ClubManager
 {
@@ -21,13 +27,41 @@ namespace ClubManager
 
         private void btnVolver_Click(object sender, EventArgs e)
         {
+<<<<<<< HEAD
+            FrmInicio inicio = new FrmInicio();
+            inicio.Show();
+            Close();
+=======
             //Mostrar el FrmInicio
             FrmInicio ini = new FrmInicio();
             ini.Show();
+>>>>>>> origin/main
         }
 
         private void btnCambiarPass_Click(object sender, EventArgs e)
         {
+<<<<<<< HEAD
+            try
+            {
+                UsuarioBLL usuarioBLL = new UsuarioBLL();
+                int filas = usuarioBLL.CambiarContraseña(txtUsuario.Text.Trim(), txtViejaPass.Text, txtNuevaPass.Text);
+
+                if (filas > 0)
+                {
+                    lblResultado.Text = "Contraseña actualizada.";
+                    txtViejaPass.Text = string.Empty;
+                    txtNuevaPass.Text = string.Empty;
+                }
+                else
+                {
+                    lblResultado.Text = "No se actualizó la contraseña.";
+                }
+            }
+            catch (Exception exception)
+            {
+                lblResultado.Text = exception.Message;
+            }
+=======
             UsuarioBLL usrBLL = new UsuarioBLL();
 
             bool usrOk = usrBLL.ValidarUsuario(txtUsuario.Text, txtNuevaPass.Text);
@@ -47,6 +81,7 @@ namespace ClubManager
                 }
             }
 
+>>>>>>> origin/main
         }
     }
 }

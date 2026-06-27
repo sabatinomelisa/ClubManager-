@@ -12,9 +12,13 @@ namespace DAL
 
         public BitacoraDAL()
         {
+<<<<<<< HEAD
+            connectionString = ConnectionStringProvider.Instancia.ObtenerConnectionString();
+=======
             // No se modifica App.config para no tocar archivos existentes.
             // Ajustar este valor si tu base no usa LocalDB.
             connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=ClubManagerDB;Integrated Security=True";
+>>>>>>> origin/main
         }
 
         public BitacoraDAL(string connectionString)
@@ -24,6 +28,17 @@ namespace DAL
 
         public void Registrar(BitacoraBE bitacora)
         {
+<<<<<<< HEAD
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string query = @"
+                    INSERT INTO Bitacora (Fecha, Usuario, Accion, Modulo, Descripcion)
+                    VALUES (@Fecha, @Usuario, @Accion, @Modulo, @Descripcion)";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.Add("@Fecha", SqlDbType.DateTime).Value = DateTime.Now;
+=======
             CrearTablaSiNoExiste();
 
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -34,6 +49,7 @@ namespace DAL
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
+>>>>>>> origin/main
                     command.Parameters.Add("@Usuario", SqlDbType.NVarChar, 100).Value = ObtenerValorNullable(bitacora.Usuario);
                     command.Parameters.Add("@Accion", SqlDbType.NVarChar, 100).Value = bitacora.Accion;
                     command.Parameters.Add("@Modulo", SqlDbType.NVarChar, 100).Value = bitacora.Modulo;
@@ -47,8 +63,21 @@ namespace DAL
 
         public List<BitacoraBE> Listar()
         {
+<<<<<<< HEAD
+            return Buscar(null, null, null, null, null);
+        }
+
+        public List<BitacoraBE> ListarPorUsuario(string usuario)
+        {
+            return Buscar(usuario, null, null, null, null);
+        }
+
+        public List<BitacoraBE> Buscar(string usuario, string accion, string modulo, DateTime? fechaDesde, DateTime? fechaHasta)
+        {
+=======
             CrearTablaSiNoExiste();
 
+>>>>>>> origin/main
             List<BitacoraBE> bitacoras = new List<BitacoraBE>();
 
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -56,10 +85,27 @@ namespace DAL
                 string query = @"
                     SELECT IdBitacora, Fecha, Usuario, Accion, Modulo, Descripcion
                     FROM Bitacora
+<<<<<<< HEAD
+                    WHERE (@Usuario IS NULL OR Usuario = @Usuario)
+                      AND (@Accion IS NULL OR Accion = @Accion)
+                      AND (@Modulo IS NULL OR Modulo = @Modulo)
+                      AND (@FechaDesde IS NULL OR Fecha >= @FechaDesde)
+                      AND (@FechaHasta IS NULL OR Fecha <= @FechaHasta)
+=======
+>>>>>>> origin/main
                     ORDER BY Fecha DESC";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
+<<<<<<< HEAD
+                    command.Parameters.Add("@Usuario", SqlDbType.NVarChar, 100).Value = ObtenerValorNullable(usuario);
+                    command.Parameters.Add("@Accion", SqlDbType.NVarChar, 100).Value = ObtenerValorNullable(accion);
+                    command.Parameters.Add("@Modulo", SqlDbType.NVarChar, 100).Value = ObtenerValorNullable(modulo);
+                    command.Parameters.Add("@FechaDesde", SqlDbType.DateTime).Value = fechaDesde.HasValue ? (object)fechaDesde.Value : DBNull.Value;
+                    command.Parameters.Add("@FechaHasta", SqlDbType.DateTime).Value = fechaHasta.HasValue ? (object)fechaHasta.Value : DBNull.Value;
+
+=======
+>>>>>>> origin/main
                     connection.Open();
 
                     using (SqlDataReader reader = command.ExecuteReader())
@@ -83,6 +129,8 @@ namespace DAL
             return bitacoras;
         }
 
+<<<<<<< HEAD
+=======
         public List<BitacoraBE> ListarPorUsuario(string usuario)
         {
             CrearTablaSiNoExiste();
@@ -152,6 +200,7 @@ namespace DAL
             }
         }
 
+>>>>>>> origin/main
         private object ObtenerValorNullable(string valor)
         {
             if (string.IsNullOrWhiteSpace(valor))

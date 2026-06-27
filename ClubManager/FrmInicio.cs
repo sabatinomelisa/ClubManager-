@@ -1,3 +1,12 @@
+<<<<<<< HEAD
+﻿using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
+using BE;
+using BLL;
+using SERVICIOS;
+using SERVICIOS.Observer;
+=======
 ﻿using BE;
 using BLL;
 using SERVICIOS;
@@ -12,12 +21,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+>>>>>>> origin/main
 
 namespace ClubManager
 {
     public partial class FrmInicio : Form, IOberverIdioma
     {
+<<<<<<< HEAD
+        private bool cargando = true;
+
+=======
         bool cargando = true;
+>>>>>>> origin/main
         public FrmInicio()
         {
             InitializeComponent();
@@ -25,6 +40,31 @@ namespace ClubManager
 
         private void FrmInicio_Load(object sender, EventArgs e)
         {
+<<<<<<< HEAD
+            lblMensaje.Text = string.Empty;
+
+            try
+            {
+                IdiomaBLL idiomaBLL = new IdiomaBLL();
+                List<IdiomaBE> idiomas = idiomaBLL.ListarIdiomas();
+
+                cmbIdiomas.DataSource = idiomas;
+                cmbIdiomas.DisplayMember = "Nombre";
+                cmbIdiomas.ValueMember = "Id";
+
+                cargando = false;
+                TratamientoIdioma.Instancia.Suscribir(this);
+
+                if (TratamientoIdioma.Instancia.IdiomaActual != null)
+                {
+                    cmbIdiomas.SelectedValue = TratamientoIdioma.Instancia.IdiomaActual.Id;
+                    ActualizarIdioma();
+                }
+            }
+            catch (Exception exception)
+            {
+                lblMensaje.Text = "No se pudieron cargar los idiomas: " + exception.Message;
+=======
             lblMensaje.Text=string.Empty;
             txtPassword.Text=string.Empty;
             txtUsername.Text=string.Empty;
@@ -47,11 +87,35 @@ namespace ClubManager
                     TratamientoIdioma.Instancia.IdiomaActual.Id;
 
                 ActualizarIdioma();
+>>>>>>> origin/main
             }
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
+<<<<<<< HEAD
+            try
+            {
+                UsuarioBLL usuarioBLL = new UsuarioBLL();
+                usuarioBLL.Login(txtUsername.Text.Trim(), txtPassword.Text);
+
+                MessageBox.Show("Login exitoso.");
+
+                FrmMenu menu = new FrmMenu();
+                menu.Show();
+                Hide();
+            }
+            catch (Exception exception)
+            {
+                lblMensaje.Text = exception.Message;
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            FrmRegistro registro = new FrmRegistro();
+            registro.Show();
+=======
              try
              {
                 if (txtUsername.Text != string.Empty && txtPassword.Text != string.Empty)
@@ -97,18 +161,27 @@ namespace ClubManager
             FrmRegistro reg = new FrmRegistro();
             reg.Show();
 
+>>>>>>> origin/main
         }
 
         private void btnOlvidaste_Click(object sender, EventArgs e)
         {
+<<<<<<< HEAD
+            FrmOlvidaste olvidoPassword = new FrmOlvidaste();
+            olvidoPassword.Show();
+=======
             //Mostrar el FrmOlvidaste
             FrmOlvidaste olv = new FrmOlvidaste();
             olv.Show();
+>>>>>>> origin/main
         }
 
         private void btnSalir_Click(object sender, EventArgs e)
         {
+<<<<<<< HEAD
+=======
             //Salir de la Aplicación
+>>>>>>> origin/main
             Application.Exit();
         }
 
@@ -116,6 +189,40 @@ namespace ClubManager
         {
             List<TraduccionBE> traducciones = new List<TraduccionBE>();
 
+<<<<<<< HEAD
+            TraduccionBLL traduccionBLL = new TraduccionBLL();
+            int idiomaSeleccionado = TratamientoIdioma.Instancia.IdiomaActual.Id;
+
+            traducciones = traduccionBLL.Listar(idiomaSeleccionado);
+
+            foreach (TraduccionBE traduccion in traducciones)
+            {
+                switch (traduccion.NombreControl)
+                {
+                    case "lblUsuario":
+                        lblUsuario.Text = traduccion.Traduccion;
+                        break;
+                    case "lblContraseña":
+                        lblContraseña.Text = traduccion.Traduccion;
+                        break;
+                    case "btnIngresar":
+                        btnIngresar.Text = traduccion.Traduccion;
+                        break;
+                    case "btnRegistrar":
+                        btnRegistrar.Text = traduccion.Traduccion;
+                        break;
+                    case "btnOlvidaste":
+                        btnOlvidaste.Text = traduccion.Traduccion;
+                        break;
+                    case "btnSalir":
+                        btnSalir.Text = traduccion.Traduccion;
+                        break;
+                    case "lblIdioma":
+                        lblIdioma.Text = traduccion.Traduccion;
+                        break;
+                }
+            }
+=======
             TraduccionBLL tradBLL = new TraduccionBLL();
             int idiomaSel = TratamientoIdioma.Instancia.IdiomaActual.Id;
 
@@ -157,14 +264,24 @@ namespace ClubManager
                 }
             }
 
+>>>>>>> origin/main
         }
 
         private void cmbIdiomas_SelectedIndexChanged(object sender, EventArgs e)
         {
+<<<<<<< HEAD
+            if (cargando)
+            {
+                return;
+            }
+
+            IdiomaBE idioma = (IdiomaBE)cmbIdiomas.SelectedItem;
+=======
             if (cargando) return;
 
             IdiomaBE idioma = (IdiomaBE)cmbIdiomas.SelectedItem;
 
+>>>>>>> origin/main
             TratamientoIdioma.Instancia.IdiomaActual = idioma;
             TratamientoIdioma.Instancia.Notificar();
         }

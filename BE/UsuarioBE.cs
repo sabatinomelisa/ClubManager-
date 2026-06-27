@@ -1,3 +1,10 @@
+<<<<<<< HEAD
+using System;
+
+namespace BE
+{
+    public class UsuarioBE : SocioBE
+=======
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +14,7 @@ using System.Threading.Tasks;
 namespace BE
 {
     public class UsuarioBE:SocioBE
+>>>>>>> origin/main
     {
         private string username;
 
@@ -40,9 +48,29 @@ namespace BE
             set { bloqueado = value; }
         }
 
+<<<<<<< HEAD
+        private string activo;
+
+        public string Activo
+        {
+            get { return activo; }
+            set { activo = value; }
+        }
+
+        private int intentosFallidos;
+
+        public int IntentosFallidos
+        {
+            get { return intentosFallidos; }
+            set { intentosFallidos = value; }
+        }
+
+        public RolBE Rol { get; set; }
+=======
         public RolBE Rol { get; set; }
 
 
 
+>>>>>>> origin/main
     }
 }

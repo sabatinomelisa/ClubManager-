@@ -1,4 +1,8 @@
+<<<<<<< HEAD
+﻿<?xml version="1.0" encoding="utf-8"?>
+=======
 <?xml version="1.0" encoding="utf-8"?>
+>>>>>>> origin/main
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -31,9 +35,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+<<<<<<< HEAD
+=======
     <Reference Include="BCrypt.Net-Next, Version=3.2.1.0, Culture=neutral, PublicKeyToken=1e11be04b6288443, processorArchitecture=MSIL">
       <HintPath>..\packages\BCrypt.Net-Next.3.2.1\lib\net40\BCrypt.Net-Next.dll</HintPath>
     </Reference>
+>>>>>>> origin/main
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -53,10 +60,24 @@
     <Compile Include="SocioBE.cs" />
     <Compile Include="TraduccionBE.cs" />
     <Compile Include="UsuarioBE.cs" />
+<<<<<<< HEAD
+    <Compile Include="ResultadoIntegridadBE.cs" />
+    <Compile Include="CambioSocioBE.cs" />
+    <Compile Include="PagoBE.cs" />
+    <Compile Include="JugadorBE.cs" />
+    <Compile Include="EventoDeportivoBE.cs" />
+    <Compile Include="MovimientoFinancieroBE.cs" />
+    <Compile Include="PublicacionBE.cs" />
+    <Compile Include="InsigniaBE.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+=======
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+>>>>>>> origin/main
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
