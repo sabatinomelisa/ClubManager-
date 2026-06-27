@@ -1,0 +1,12 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Build ClubManager",
+      "type": "shell",
+      "command": "msbuild ClubManager.sln /p:Configuration=Debug",
+      "group": "build",
+      "problemMatcher": "$msCompile"
+    }
+  ]
+}
