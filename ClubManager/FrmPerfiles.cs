@@ -1,4 +1,4 @@
-using BE;
+using SERVICIOS.Composite;
 using BLL;
 using System;
 using System.Collections.Generic;
@@ -20,6 +20,7 @@ namespace ClubManager
             rolBLL = new RolBLL();
             InicializarControles();
             CargarRoles();
+            VisualStyleHelper.AplicarEstiloBase(this);
         }
 
         private void InicializarControles()
@@ -73,7 +74,7 @@ namespace ClubManager
         {
             try
             {
-                List<RolBE> roles = rolBLL.ListarRoles();
+                List<Rol> roles = rolBLL.ListarRoles();
                 cmbRoles.DataSource = roles;
                 cmbRoles.DisplayMember = "Nombre";
                 cmbRoles.ValueMember = "Id";
@@ -93,8 +94,8 @@ namespace ClubManager
 
             try
             {
-                RolBE rolSeleccionado = (RolBE)cmbRoles.SelectedItem;
-                RolBE rolCompleto = rolBLL.ObtenerRolConComponentes(rolSeleccionado.Id);
+                Rol rolSeleccionado = (Rol)cmbRoles.SelectedItem;
+                Rol rolCompleto = rolBLL.ObtenerRolConComponentes(rolSeleccionado.Id);
 
                 tvwPermisos.Nodes.Clear();
 
@@ -111,9 +112,9 @@ namespace ClubManager
             }
         }
 
-        private void AgregarComponentesAlNodo(TreeNode nodoPadre, ComponenteBE componentePadre)
+        private void AgregarComponentesAlNodo(TreeNode nodoPadre, Componente componentePadre)
         {
-            foreach (ComponenteBE componenteHijo in componentePadre.ObtenerComponentes())
+            foreach (Componente componenteHijo in componentePadre.ObtenerComponentes())
             {
                 string prefijo = componenteHijo.EsRol ? "Rol: " : "Permiso: ";
                 TreeNode nodoHijo = new TreeNode(prefijo + componenteHijo.Nombre);

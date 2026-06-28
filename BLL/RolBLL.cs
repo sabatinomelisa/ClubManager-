@@ -1,6 +1,6 @@
-using BE;
-using DAL;
+﻿using DAL;
 using SERVICIOS;
+using SERVICIOS.Composite;
 using System;
 using System.Collections.Generic;
 
@@ -17,14 +17,14 @@ namespace BLL
             bitacoraBLL = new BitacoraBLL();
         }
 
-        public List<RolBE> ListarRoles()
+        public List<Rol> ListarRoles()
         {
             return rolDAL.ListarRoles();
         }
 
-        public RolBE ObtenerRolConComponentes(int idRol)
+        public Rol ObtenerRolConComponentes(int idRol)
         {
-            RolBE rol = rolDAL.ObtenerRol(idRol);
+            Rol rol = rolDAL.ObtenerRol(idRol);
             string nombreUsuario = "Sistema";
 
             if (SessionManager.SesionIniciada)
@@ -36,7 +36,7 @@ namespace BLL
             return rol;
         }
 
-        public bool TienePermiso(RolBE rol, string nombrePermiso)
+        public bool TienePermiso(Rol rol, string nombrePermiso)
         {
             if (rol == null || string.IsNullOrWhiteSpace(nombrePermiso))
             {
@@ -46,9 +46,9 @@ namespace BLL
             return BuscarPermisoEnComponente(rol, nombrePermiso);
         }
 
-        public List<ComponenteBE> ObtenerComponentesPlanos(RolBE rol)
+        public List<Componente> ObtenerComponentesPlanos(Rol rol)
         {
-            List<ComponenteBE> componentesPlanos = new List<ComponenteBE>();
+            List<Componente> componentesPlanos = new List<Componente>();
 
             if (rol != null)
             {
@@ -58,14 +58,14 @@ namespace BLL
             return componentesPlanos;
         }
 
-        private bool BuscarPermisoEnComponente(ComponenteBE componente, string nombrePermiso)
+        private bool BuscarPermisoEnComponente(Componente componente, string nombrePermiso)
         {
             if (!componente.EsRol)
             {
                 return string.Equals(componente.Nombre, nombrePermiso, StringComparison.OrdinalIgnoreCase);
             }
 
-            foreach (ComponenteBE componenteHijo in componente.ObtenerComponentes())
+            foreach (Componente componenteHijo in componente.ObtenerComponentes())
             {
                 if (BuscarPermisoEnComponente(componenteHijo, nombrePermiso))
                 {
@@ -76,9 +76,9 @@ namespace BLL
             return false;
         }
 
-        private void AgregarComponentesRecursivos(ComponenteBE componente, List<ComponenteBE> componentesPlanos)
+        private void AgregarComponentesRecursivos(Componente componente, List<Componente> componentesPlanos)
         {
-            foreach (ComponenteBE componenteHijo in componente.ObtenerComponentes())
+            foreach (Componente componenteHijo in componente.ObtenerComponentes())
             {
                 componentesPlanos.Add(componenteHijo);
                 AgregarComponentesRecursivos(componenteHijo, componentesPlanos);

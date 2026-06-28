@@ -1,20 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-<<<<<<< HEAD
 using System.Text.RegularExpressions;
 using BE;
 using DAL;
-=======
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
->>>>>>> origin/main
 
 namespace BLL
 {
     public class SocioBLL
     {
-<<<<<<< HEAD
         private readonly SocioDAL socioDAL;
         private readonly ControlCambioBLL controlCambioBLL;
         private readonly BitacoraBLL bitacoraBLL;
@@ -43,8 +36,11 @@ namespace BLL
             ValidarSocio(socio);
             socio.Activo = "S";
             int resultado = socioDAL.AltaSocio(socio);
-            integridadBLL.RecalcularIntegridad();
-            controlCambioBLL.RegistrarCambioSocio(null, socio, usuario, "ALTA", "Alta de socio.");
+            if (resultado > 0)
+            {
+                integridadBLL.RecalcularIntegridad();
+            }
+            controlCambioBLL.RegistrarMailInicialSocio(socio, usuario);
             bitacoraBLL.RegistrarAlta(usuario, "Socios", "Alta de socio " + socio.NombreCompleto + ".");
             return resultado;
         }
@@ -59,10 +55,12 @@ namespace BLL
                 throw new Exception("No se encontró el socio a modificar.");
             }
 
+            controlCambioBLL.RegistrarCambioMailSocio(socioAnterior, socio, usuario);
             int resultado = socioDAL.ModificarSocio(socio);
-            integridadBLL.RecalcularIntegridad();
-            SocioBE socioNuevo = socioDAL.ObtenerSocio(socio.IdSocio);
-            controlCambioBLL.RegistrarCambioSocio(socioAnterior, socioNuevo, usuario, "MODIFICACION", "Modificación de socio.");
+            if (resultado > 0)
+            {
+                integridadBLL.RecalcularIntegridad();
+            }
             bitacoraBLL.RegistrarModificacion(usuario, "Socios", "Modificación de socio " + socio.IdSocio + ".");
             return resultado;
         }
@@ -77,9 +75,10 @@ namespace BLL
             }
 
             int resultado = socioDAL.CambiarEstadoSocio(idSocio, "N");
-            integridadBLL.RecalcularIntegridad();
-            SocioBE socioNuevo = socioDAL.ObtenerSocio(idSocio);
-            controlCambioBLL.RegistrarCambioSocio(socioAnterior, socioNuevo, usuario, "BAJA", "Baja lógica de socio.");
+            if (resultado > 0)
+            {
+                integridadBLL.RecalcularIntegridad();
+            }
             bitacoraBLL.RegistrarBaja(usuario, "Socios", "Baja lógica de socio " + idSocio + ".");
             return resultado;
         }
@@ -136,7 +135,5 @@ namespace BLL
                 socio.Activo = "S";
             }
         }
-=======
->>>>>>> origin/main
     }
 }

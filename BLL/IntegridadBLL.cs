@@ -27,6 +27,32 @@ namespace BLL
             }
         }
 
+
+        public void ValidarIntegridadParaLogin()
+        {
+            InicializarSiCorresponde();
+            ValidarIntegridadObligatoria("login");
+        }
+
+        public void ActualizarIntegridadParaLogout()
+        {
+            RecalcularIntegridad();
+            ValidarIntegridadObligatoria("logout");
+        }
+
+        private void ValidarIntegridadObligatoria(string operacion)
+        {
+            List<ResultadoIntegridadBE> resultados = VerificarIntegridad();
+
+            foreach (ResultadoIntegridadBE resultado in resultados)
+            {
+                if (!resultado.Correcto)
+                {
+                    throw new Exception("Error de integridad en " + operacion + ": " + resultado.Mensaje);
+                }
+            }
+        }
+
         public List<ResultadoIntegridadBE> VerificarIntegridad()
         {
             List<ResultadoIntegridadBE> resultados = new List<ResultadoIntegridadBE>();

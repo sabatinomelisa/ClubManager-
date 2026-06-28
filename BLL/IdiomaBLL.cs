@@ -2,18 +2,11 @@
 using DAL;
 using System;
 using System.Collections.Generic;
-<<<<<<< HEAD
-=======
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
->>>>>>> origin/main
 
 namespace BLL
 {
     public class IdiomaBLL
     {
-<<<<<<< HEAD
         private readonly IdiomaDAL idiomaDAL;
         private readonly BitacoraBLL bitacoraBLL;
 
@@ -39,13 +32,5 @@ namespace BLL
             bitacoraBLL.RegistrarAlta(usuario, "Idiomas", "Alta de idioma " + nombreIdioma + ".");
             return resultado;
         }
-=======
-        public List<IdiomaBE> ListarIdiomas()
-        {
-            IdiomaDAL idiomaDAL = new IdiomaDAL();
-
-            return idiomaDAL.Listar();
-        }
->>>>>>> origin/main
     }
 }

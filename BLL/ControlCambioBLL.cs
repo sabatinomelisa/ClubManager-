@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using BE;
 using DAL;
-using SERVICIOS;
 
 namespace BLL
 {
@@ -10,53 +9,90 @@ namespace BLL
     {
         private readonly ControlCambioDAL controlCambioDAL;
         private readonly SocioDAL socioDAL;
-        private readonly SerializadorSimple serializadorSimple;
         private readonly BitacoraBLL bitacoraBLL;
-        private readonly IntegridadBLL integridadBLL;
 
         public ControlCambioBLL()
         {
             controlCambioDAL = new ControlCambioDAL();
             socioDAL = new SocioDAL();
-            serializadorSimple = new SerializadorSimple();
             bitacoraBLL = new BitacoraBLL();
-            integridadBLL = new IntegridadBLL();
         }
 
-        public void RegistrarCambioSocio(SocioBE estadoAnterior, SocioBE estadoNuevo, string usuario, string accion, string descripcion)
+        public void RegistrarMailInicialSocio(SocioBE socio, string usuario)
         {
-            CambioSocioBE cambioSocio = new CambioSocioBE();
-            cambioSocio.IdSocio = estadoNuevo != null ? estadoNuevo.IdSocio : estadoAnterior.IdSocio;
-            cambioSocio.Usuario = string.IsNullOrWhiteSpace(usuario) ? "SIN_SESION" : usuario;
-            cambioSocio.Accion = accion;
-            cambioSocio.EstadoAnterior = serializadorSimple.SerializarSocio(estadoAnterior);
-            cambioSocio.EstadoNuevo = serializadorSimple.SerializarSocio(estadoNuevo);
-            cambioSocio.Descripcion = descripcion;
-
-            controlCambioDAL.RegistrarCambioSocio(cambioSocio);
-        }
-
-        public List<CambioSocioBE> ListarCambiosSocio(int? idSocio)
-        {
-            return controlCambioDAL.ListarCambiosSocio(idSocio);
-        }
-
-        public void RecomponerEstadoAnterior(int idCambioSocio, string usuario)
-        {
-            CambioSocioBE cambioSocio = controlCambioDAL.ObtenerCambioSocio(idCambioSocio);
-
-            if (cambioSocio == null)
+            if (socio == null || socio.IdSocio <= 0 || string.IsNullOrWhiteSpace(socio.Mail))
             {
-                throw new Exception("No se encontró el cambio seleccionado.");
+                return;
             }
 
-            SocioBE estadoAnterior = serializadorSimple.DeserializarSocio(cambioSocio.EstadoAnterior);
-            SocioBE estadoActual = socioDAL.ObtenerSocio(estadoAnterior.IdSocio);
+            RegistrarMailHistorico(socio.IdSocio, socio.Mail);
+            bitacoraBLL.Registrar(usuario, "HISTORIAL_MAIL", "Socios", "Se registró el mail inicial del socio " + socio.IdSocio + ".");
+        }
 
-            socioDAL.ModificarSocio(estadoAnterior);
-            integridadBLL.RecalcularIntegridad();
-            RegistrarCambioSocio(estadoActual, estadoAnterior, usuario, "RECOMPOSICION", "Recomposición desde historial de cambios.");
-            bitacoraBLL.Registrar(usuario, "RECOMPOSICION", "Control de Cambios", "Se recompuso el socio " + estadoAnterior.IdSocio + " desde el cambio " + idCambioSocio + ".");
+        public void RegistrarCambioMailSocio(SocioBE socioAnterior, SocioBE socioNuevo, string usuario)
+        {
+            if (socioAnterior == null || socioNuevo == null)
+            {
+                return;
+            }
+
+            string mailAnterior = socioAnterior.Mail == null ? string.Empty : socioAnterior.Mail.Trim();
+            string mailNuevo = socioNuevo.Mail == null ? string.Empty : socioNuevo.Mail.Trim();
+
+            if (string.Equals(mailAnterior, mailNuevo, StringComparison.OrdinalIgnoreCase))
+            {
+                return;
+            }
+
+            RegistrarMailHistorico(socioAnterior.IdSocio, mailAnterior);
+            bitacoraBLL.Registrar(usuario, "CAMBIO_MAIL", "Socios", "Se registró cambio de mail del socio " + socioAnterior.IdSocio + ". Mail anterior: " + mailAnterior + ".");
+        }
+
+        public List<HistorialBE> ListarHistorialMailSocio(int? idSocio)
+        {
+            return controlCambioDAL.ListarHistorialMailSocio(idSocio);
+        }
+
+        public void VolverAlMailHistorico(int idSocio, int idHistorico, string usuario)
+        {
+            HistorialBE historialMail = controlCambioDAL.ObtenerHistorialMailSocio(idSocio, idHistorico);
+
+            if (historialMail == null)
+            {
+                throw new Exception("No se encontró el mail histórico seleccionado.");
+            }
+
+            SocioBE socioActual = socioDAL.ObtenerSocio(idSocio);
+
+            if (socioActual == null)
+            {
+                throw new Exception("No se encontró el socio seleccionado.");
+            }
+
+            string mailActual = socioActual.Mail == null ? string.Empty : socioActual.Mail.Trim();
+            string mailHistorico = historialMail.Mail == null ? string.Empty : historialMail.Mail.Trim();
+
+            if (string.Equals(mailActual, mailHistorico, StringComparison.OrdinalIgnoreCase))
+            {
+                throw new Exception("El socio ya tiene asignado ese mail.");
+            }
+
+            RegistrarMailHistorico(idSocio, mailActual);
+            socioDAL.ActualizarMailSocio(idSocio, mailHistorico);
+            bitacoraBLL.Registrar(usuario, "RESTAURAR_MAIL", "Control de Cambios", "Se restauró el mail histórico del socio " + idSocio + ".");
+        }
+
+        private void RegistrarMailHistorico(int idSocio, string mail)
+        {
+            if (idSocio <= 0 || string.IsNullOrWhiteSpace(mail))
+            {
+                return;
+            }
+
+            HistorialBE historial = new HistorialBE();
+            historial.IdSocio = idSocio;
+            historial.Mail = mail.Trim();
+            controlCambioDAL.RegistrarMailHistorico(historial);
         }
     }
 }

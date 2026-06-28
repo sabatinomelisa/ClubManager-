@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 ﻿<?xml version="1.0" encoding="utf-8"?>
-=======
-<?xml version="1.0" encoding="utf-8"?>
->>>>>>> origin/main
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -12,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>ClubManager</RootNamespace>
     <AssemblyName>ClubManager</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
@@ -36,12 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-<<<<<<< HEAD
-=======
     <Reference Include="BCrypt.Net-Next, Version=3.2.1.0, Culture=neutral, PublicKeyToken=1e11be04b6288443, processorArchitecture=MSIL">
-      <HintPath>..\packages\BCrypt.Net-Next.3.2.1\lib\net40\BCrypt.Net-Next.dll</HintPath>
+      <HintPath>..\packages\BCrypt.Net-Next.3.2.1\lib\net472\BCrypt.Net-Next.dll</HintPath>
     </Reference>
->>>>>>> origin/main
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -85,12 +78,9 @@
     <Compile Include="FrmModificarUsuario.Designer.cs">
       <DependentUpon>FrmModificarUsuario.cs</DependentUpon>
     </Compile>
-<<<<<<< HEAD
     <Compile Include="FrmPerfiles.cs">
       <SubType>Form</SubType>
     </Compile>
-=======
->>>>>>> origin/main
     <Compile Include="FrmOlvidaste.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -104,10 +94,8 @@
       <DependentUpon>FrmRegistro.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
-<<<<<<< HEAD
-    <Compile Include="FrmIntegridad.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="VisualStyleHelper.cs" />
+    <Compile Include="PasswordVisibilityHelper.cs" />
     <Compile Include="FrmControlCambios.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -120,8 +108,9 @@
     <Compile Include="FrmModuloClub.cs">
       <SubType>Form</SubType>
     </Compile>
-=======
->>>>>>> origin/main
+    <Compile Include="FrmPortalSocio.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FrmBienvenida.resx">
       <DependentUpon>FrmBienvenida.cs</DependentUpon>
@@ -150,10 +139,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-<<<<<<< HEAD
-=======
-    <None Include="packages.config" />
->>>>>>> origin/main
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -180,6 +165,23 @@
       <Project>{af14899b-16b9-4663-b8fd-c57a40d2180f}</Project>
       <Name>SERVICIOS</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Insignias\muchachos.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Insignias\as_deportivo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Insignias\todos_por_el_club.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Insignias\multiclass.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -9,6 +9,7 @@ namespace ClubManager
     public class FrmSocios : Form
     {
         private readonly SocioBLL socioBLL;
+        private readonly UsuarioBLL usuarioBLL;
         private DataGridView dgvSocios;
         private TextBox txtIdSocio;
         private TextBox txtTipoDocumento;
@@ -20,12 +21,16 @@ namespace ClubManager
         private TextBox txtMail;
         private TextBox txtTelefono;
         private ComboBox cmbActivo;
+        private ComboBox cmbRolSocio;
+        private Button btnCambiarTipoSocio;
 
         public FrmSocios()
         {
             socioBLL = new SocioBLL();
+            usuarioBLL = new UsuarioBLL();
             InicializarControles();
             CargarSocios();
+            VisualStyleHelper.AplicarEstiloBase(this);
         }
 
         private void InicializarControles()
@@ -70,6 +75,23 @@ namespace ClubManager
             cmbActivo.Items.Add("N");
             cmbActivo.SelectedIndex = 0;
 
+            Label lblRolSocio = new Label();
+            lblRolSocio.Text = "Tipo socio";
+            lblRolSocio.Left = 700;
+            lblRolSocio.Top = 82;
+            lblRolSocio.Width = 120;
+            cmbRolSocio = new ComboBox();
+            cmbRolSocio.Left = 700;
+            cmbRolSocio.Top = 105;
+            cmbRolSocio.Width = 150;
+            cmbRolSocio.DropDownStyle = ComboBoxStyle.DropDownList;
+            CargarTiposSocio();
+
+            btnCambiarTipoSocio = CrearBoton("Cambiar tipo", 860, 103);
+            btnCambiarTipoSocio.Width = 120;
+            btnCambiarTipoSocio.Enabled = false;
+            btnCambiarTipoSocio.Click += btnCambiarTipoSocio_Click;
+
             Button btnNuevo = CrearBoton("Nuevo", 20, 160);
             btnNuevo.Click += btnNuevo_Click;
             Button btnGuardar = CrearBoton("Guardar", 120, 160);
@@ -81,6 +103,9 @@ namespace ClubManager
 
             Controls.Add(lblActivo);
             Controls.Add(cmbActivo);
+            Controls.Add(lblRolSocio);
+            Controls.Add(cmbRolSocio);
+            Controls.Add(btnCambiarTipoSocio);
             Controls.Add(btnNuevo);
             Controls.Add(btnGuardar);
             Controls.Add(btnBaja);
@@ -114,6 +139,16 @@ namespace ClubManager
             boton.Top = top;
             boton.Width = 100;
             return boton;
+        }
+
+        private void CargarTiposSocio()
+        {
+            cmbRolSocio.Items.Clear();
+            cmbRolSocio.Items.Add(new TipoSocioOpcion(2, "Socio Simple"));
+            cmbRolSocio.Items.Add(new TipoSocioOpcion(3, "Socio Pleno"));
+            cmbRolSocio.DisplayMember = "Nombre";
+            cmbRolSocio.ValueMember = "IdRol";
+            cmbRolSocio.SelectedIndex = 0;
         }
 
         private void CargarSocios()
@@ -180,6 +215,34 @@ namespace ClubManager
             }
         }
 
+        private void btnCambiarTipoSocio_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int idSocio;
+                if (!int.TryParse(txtIdSocio.Text.Trim(), out idSocio))
+                {
+                    MessageBox.Show("Seleccionar un socio.");
+                    return;
+                }
+
+                TipoSocioOpcion tipoSocio = cmbRolSocio.SelectedItem as TipoSocioOpcion;
+                if (tipoSocio == null)
+                {
+                    MessageBox.Show("Seleccionar el tipo de socio.");
+                    return;
+                }
+
+                usuarioBLL.CambiarRolSocio(idSocio, tipoSocio.IdRol, ObtenerUsuarioActual());
+                CargarSocios();
+                MessageBox.Show("Tipo de socio actualizado correctamente.");
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         private void btnActualizar_Click(object sender, EventArgs e)
         {
             CargarSocios();
@@ -208,6 +271,39 @@ namespace ClubManager
             txtMail.Text = socio.Mail;
             txtTelefono.Text = socio.Telefono.ToString();
             cmbActivo.SelectedItem = string.IsNullOrWhiteSpace(socio.Activo) ? "S" : socio.Activo;
+            CargarRolSocioSeleccionado(socio.IdSocio);
+        }
+
+        private void CargarRolSocioSeleccionado(int idSocio)
+        {
+            try
+            {
+                UsuarioBE usuario = usuarioBLL.ObtenerPorIdSocio(idSocio);
+
+                if (usuario == null)
+                {
+                    cmbRolSocio.SelectedIndex = 0;
+                    btnCambiarTipoSocio.Enabled = false;
+                    return;
+                }
+
+                btnCambiarTipoSocio.Enabled = true;
+
+                for (int i = 0; i < cmbRolSocio.Items.Count; i++)
+                {
+                    TipoSocioOpcion opcion = cmbRolSocio.Items[i] as TipoSocioOpcion;
+                    if (opcion != null && opcion.IdRol == usuario.IdRol)
+                    {
+                        cmbRolSocio.SelectedIndex = i;
+                        return;
+                    }
+                }
+            }
+            catch
+            {
+                cmbRolSocio.SelectedIndex = 0;
+                btnCambiarTipoSocio.Enabled = false;
+            }
         }
 
         private SocioBE ObtenerSocioDesdePantalla()
@@ -267,6 +363,25 @@ namespace ClubManager
             txtMail.Text = string.Empty;
             txtTelefono.Text = string.Empty;
             cmbActivo.SelectedIndex = 0;
+            cmbRolSocio.SelectedIndex = 0;
+            btnCambiarTipoSocio.Enabled = false;
+        }
+
+        private class TipoSocioOpcion
+        {
+            public int IdRol { get; private set; }
+            public string Nombre { get; private set; }
+
+            public TipoSocioOpcion(int idRol, string nombre)
+            {
+                IdRol = idRol;
+                Nombre = nombre;
+            }
+
+            public override string ToString()
+            {
+                return Nombre;
+            }
         }
     }
 }

@@ -1,24 +1,14 @@
-<<<<<<< HEAD
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using BE;
-=======
-﻿using BE;
-using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
->>>>>>> origin/main
+using SERVICIOS;
 
 namespace DAL
 {
     public class SocioDAL
     {
-<<<<<<< HEAD
         private readonly string connectionString;
 
         public SocioDAL()
@@ -150,6 +140,21 @@ namespace DAL
             }
         }
 
+
+        public int ActualizarMailSocio(int idSocio, string mail)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlCommand command = new SqlCommand("ActualizarMailSocio", connection))
+            {
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.Add("@idSocio", SqlDbType.Int).Value = idSocio;
+                command.Parameters.Add("@mail", SqlDbType.VarChar, 100).Value = mail;
+
+                connection.Open();
+                return command.ExecuteNonQuery();
+            }
+        }
+
         public void ActualizarDigitoVerificadorHorizontal(int idSocio, int digitoVerificadorHorizontal)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -190,37 +195,6 @@ namespace DAL
             socio.Activo = reader["Activo"].ToString();
             socio.DigitoVerificadorHorizontal = Convert.ToInt32(reader["DigitoVerificadorHorizontal"]);
             return socio;
-=======
-
-        public int AltaSocio(UsuarioBE usr, Acceso acceso)
-        {
-            List<SqlParameter> parametros = new List<SqlParameter>();
-            //Busco el proximo ID del socio para insertar
-            string sql = "IdMaximo";
-            parametros.Clear();
-            int idSocio = acceso.DevolverEscalar(sql, parametros);
-            usr.IdSocio = idSocio;
-
-            //creo parámetros para el alta del socio
-
-            parametros.Clear();
-            parametros.Add(acceso.CrearParametro("@idSocio", idSocio));
-            parametros.Add(acceso.CrearParametro("@tipDoc", usr.TipoDocumento));
-            parametros.Add(acceso.CrearParametro("@nroDoc", usr.NumeroDocumento));
-            parametros.Add(acceso.CrearParametro("@nombre", usr.Nombre));
-            parametros.Add(acceso.CrearParametro("@apellido", usr.Apellido));
-            parametros.Add(acceso.CrearParametro("@fecNac", usr.FechaNacimiento));
-            parametros.Add(acceso.CrearParametro("@nacionalidad", usr.Nacionalidad));
-            parametros.Add(acceso.CrearParametro("@mail", usr.Mail));
-            parametros.Add(acceso.CrearParametro("@telefono", usr.Telefono));
-
-            //Doy de alta al socio
-            sql = "RegistrarSocio";
-            int resultado = acceso.Escribir(sql, parametros);
-           
-            return resultado;
-
->>>>>>> origin/main
         }
     }
 }

@@ -10,5 +10,8 @@ namespace BE
         public DateTime FechaEvento { get; set; }
         public string Lugar { get; set; }
         public string Estado { get; set; }
+        public int CupoEspectadores { get; set; }
+        public decimal PrecioEntradaEspectador { get; set; }
+        public decimal PrecioParticipacionJugador { get; set; }
     }
 }

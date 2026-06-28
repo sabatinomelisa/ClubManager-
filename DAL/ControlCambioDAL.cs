@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using BE;
+using SERVICIOS;
 
 namespace DAL
 {
@@ -15,30 +16,26 @@ namespace DAL
             connectionString = ConnectionStringProvider.Instancia.ObtenerConnectionString();
         }
 
-        public void RegistrarCambioSocio(CambioSocioBE cambioSocio)
+        public void RegistrarMailHistorico(HistorialBE historial)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
-            using (SqlCommand command = new SqlCommand("RegistrarCambioSocio", connection))
+            using (SqlCommand command = new SqlCommand("RegistrarHistorialMailSocio", connection))
             {
                 command.CommandType = CommandType.StoredProcedure;
-                command.Parameters.Add("@idSocio", SqlDbType.Int).Value = cambioSocio.IdSocio;
-                command.Parameters.Add("@usuario", SqlDbType.NVarChar, 100).Value = ObtenerValor(cambioSocio.Usuario);
-                command.Parameters.Add("@accion", SqlDbType.NVarChar, 50).Value = cambioSocio.Accion;
-                command.Parameters.Add("@estadoAnterior", SqlDbType.NVarChar, -1).Value = ObtenerValor(cambioSocio.EstadoAnterior);
-                command.Parameters.Add("@estadoNuevo", SqlDbType.NVarChar, -1).Value = ObtenerValor(cambioSocio.EstadoNuevo);
-                command.Parameters.Add("@descripcion", SqlDbType.NVarChar, 500).Value = ObtenerValor(cambioSocio.Descripcion);
+                command.Parameters.Add("@idSocio", SqlDbType.Int).Value = historial.IdSocio;
+                command.Parameters.Add("@mail", SqlDbType.VarChar, 100).Value = historial.Mail;
 
                 connection.Open();
                 command.ExecuteNonQuery();
             }
         }
 
-        public List<CambioSocioBE> ListarCambiosSocio(int? idSocio)
+        public List<HistorialBE> ListarHistorialMailSocio(int? idSocio)
         {
-            List<CambioSocioBE> cambios = new List<CambioSocioBE>();
+            List<HistorialBE> historial = new List<HistorialBE>();
 
             using (SqlConnection connection = new SqlConnection(connectionString))
-            using (SqlCommand command = new SqlCommand("ConsultarCambiosSocio", connection))
+            using (SqlCommand command = new SqlCommand("ConsultarHistorialMailSocio", connection))
             {
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.Add("@idSocio", SqlDbType.Int).Value = idSocio.HasValue ? (object)idSocio.Value : DBNull.Value;
@@ -48,28 +45,29 @@ namespace DAL
                 {
                     while (reader.Read())
                     {
-                        cambios.Add(MapearCambio(reader));
+                        historial.Add(MapearHistorial(reader));
                     }
                 }
             }
 
-            return cambios;
+            return historial;
         }
 
-        public CambioSocioBE ObtenerCambioSocio(int idCambioSocio)
+        public HistorialBE ObtenerHistorialMailSocio(int idSocio, int idHistorico)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
-            using (SqlCommand command = new SqlCommand("ObtenerCambioSocio", connection))
+            using (SqlCommand command = new SqlCommand("ObtenerHistorialMailSocio", connection))
             {
                 command.CommandType = CommandType.StoredProcedure;
-                command.Parameters.Add("@idCambioSocio", SqlDbType.Int).Value = idCambioSocio;
+                command.Parameters.Add("@idSocio", SqlDbType.Int).Value = idSocio;
+                command.Parameters.Add("@idHistorico", SqlDbType.Int).Value = idHistorico;
                 connection.Open();
 
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
                     if (reader.Read())
                     {
-                        return MapearCambio(reader);
+                        return MapearHistorial(reader);
                     }
                 }
             }
@@ -77,28 +75,14 @@ namespace DAL
             return null;
         }
 
-        private CambioSocioBE MapearCambio(SqlDataReader reader)
+        private HistorialBE MapearHistorial(SqlDataReader reader)
         {
-            CambioSocioBE cambioSocio = new CambioSocioBE();
-            cambioSocio.IdCambioSocio = Convert.ToInt32(reader["IdCambioSocio"]);
-            cambioSocio.IdSocio = Convert.ToInt32(reader["IdSocio"]);
-            cambioSocio.Usuario = reader["Usuario"].ToString();
-            cambioSocio.FechaCambio = Convert.ToDateTime(reader["FechaCambio"]);
-            cambioSocio.Accion = reader["Accion"].ToString();
-            cambioSocio.EstadoAnterior = reader["EstadoAnterior"].ToString();
-            cambioSocio.EstadoNuevo = reader["EstadoNuevo"].ToString();
-            cambioSocio.Descripcion = reader["Descripcion"].ToString();
-            return cambioSocio;
-        }
-
-        private object ObtenerValor(string valor)
-        {
-            if (string.IsNullOrWhiteSpace(valor))
-            {
-                return DBNull.Value;
-            }
-
-            return valor;
+            HistorialBE historial = new HistorialBE();
+            historial.IdHistorico = Convert.ToInt32(reader["IdHistorico"]);
+            historial.IdSocio = Convert.ToInt32(reader["IdSocio"]);
+            historial.Mail = reader["Email"].ToString();
+            historial.FechaCreacion = Convert.ToDateTime(reader["FechaCreacion"]);
+            return historial;
         }
     }
 }

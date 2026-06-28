@@ -15,6 +15,7 @@ namespace ClubManager
         public FrmModificarUsuario()
         {
             InitializeComponent();
+            PasswordVisibilityHelper.AgregarBoton(this, txtPassword);
         }
     }
 }

@@ -55,6 +55,7 @@
             this.txtViejaPass.Name = "txtViejaPass";
             this.txtViejaPass.Size = new System.Drawing.Size(368, 29);
             this.txtViejaPass.TabIndex = 1;
+            this.txtViejaPass.UseSystemPasswordChar = true;
             // 
             // txtNuevaPass
             // 
@@ -63,6 +64,7 @@
             this.txtNuevaPass.Name = "txtNuevaPass";
             this.txtNuevaPass.Size = new System.Drawing.Size(368, 29);
             this.txtNuevaPass.TabIndex = 2;
+            this.txtNuevaPass.UseSystemPasswordChar = true;
             // 
             // lblUsuario
             // 

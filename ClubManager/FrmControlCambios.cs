@@ -1,5 +1,6 @@
-﻿using System;
+using System;
 using System.Windows.Forms;
+using BE;
 using BLL;
 using SERVICIOS;
 
@@ -9,23 +10,24 @@ namespace ClubManager
     {
         private readonly ControlCambioBLL controlCambioBLL;
         private TextBox txtIdSocio;
-        private TextBox txtIdCambio;
+        private TextBox txtIdHistorico;
         private Button btnBuscar;
-        private Button btnRecomponer;
-        private DataGridView dgvCambios;
+        private Button btnVolverMail;
+        private DataGridView dgvHistorialMail;
 
         public FrmControlCambios()
         {
             controlCambioBLL = new ControlCambioBLL();
             InicializarControles();
+            VisualStyleHelper.AplicarEstiloBase(this);
         }
 
         private void InicializarControles()
         {
-            Text = "Control de cambios - Socios";
+            Text = "Histórico de mail del socio";
             StartPosition = FormStartPosition.CenterScreen;
-            Width = 900;
-            Height = 520;
+            Width = 820;
+            Height = 500;
 
             Label lblSocio = new Label();
             lblSocio.Text = "Id socio";
@@ -45,41 +47,42 @@ namespace ClubManager
             btnBuscar.Width = 90;
             btnBuscar.Click += btnBuscar_Click;
 
-            Label lblCambio = new Label();
-            lblCambio.Text = "Id cambio";
-            lblCambio.Left = 310;
-            lblCambio.Top = 20;
-            lblCambio.Width = 80;
+            Label lblHistorico = new Label();
+            lblHistorico.Text = "Id histórico";
+            lblHistorico.Left = 310;
+            lblHistorico.Top = 20;
+            lblHistorico.Width = 90;
 
-            txtIdCambio = new TextBox();
-            txtIdCambio.Left = 395;
-            txtIdCambio.Top = 16;
-            txtIdCambio.Width = 80;
+            txtIdHistorico = new TextBox();
+            txtIdHistorico.Left = 405;
+            txtIdHistorico.Top = 16;
+            txtIdHistorico.Width = 80;
 
-            btnRecomponer = new Button();
-            btnRecomponer.Text = "Recomponer estado anterior";
-            btnRecomponer.Left = 485;
-            btnRecomponer.Top = 14;
-            btnRecomponer.Width = 190;
-            btnRecomponer.Click += btnRecomponer_Click;
+            btnVolverMail = new Button();
+            btnVolverMail.Text = "Volver al mail seleccionado";
+            btnVolverMail.Left = 500;
+            btnVolverMail.Top = 14;
+            btnVolverMail.Width = 200;
+            btnVolverMail.Click += btnVolverMail_Click;
 
-            dgvCambios = new DataGridView();
-            dgvCambios.Left = 20;
-            dgvCambios.Top = 55;
-            dgvCambios.Width = 840;
-            dgvCambios.Height = 390;
-            dgvCambios.ReadOnly = true;
-            dgvCambios.AllowUserToAddRows = false;
-            dgvCambios.AllowUserToDeleteRows = false;
-            dgvCambios.AutoGenerateColumns = true;
+            dgvHistorialMail = new DataGridView();
+            dgvHistorialMail.Left = 20;
+            dgvHistorialMail.Top = 55;
+            dgvHistorialMail.Width = 760;
+            dgvHistorialMail.Height = 360;
+            dgvHistorialMail.ReadOnly = true;
+            dgvHistorialMail.AllowUserToAddRows = false;
+            dgvHistorialMail.AllowUserToDeleteRows = false;
+            dgvHistorialMail.AutoGenerateColumns = true;
+            dgvHistorialMail.SelectionChanged += dgvHistorialMail_SelectionChanged;
 
             Controls.Add(lblSocio);
             Controls.Add(txtIdSocio);
             Controls.Add(btnBuscar);
-            Controls.Add(lblCambio);
-            Controls.Add(txtIdCambio);
-            Controls.Add(btnRecomponer);
-            Controls.Add(dgvCambios);
+            Controls.Add(lblHistorico);
+            Controls.Add(txtIdHistorico);
+            Controls.Add(btnVolverMail);
+            Controls.Add(dgvHistorialMail);
         }
 
         private void btnBuscar_Click(object sender, EventArgs e)
@@ -94,7 +97,7 @@ namespace ClubManager
                     filtro = idSocio;
                 }
 
-                dgvCambios.DataSource = controlCambioBLL.ListarCambiosSocio(filtro);
+                dgvHistorialMail.DataSource = controlCambioBLL.ListarHistorialMailSocio(filtro);
             }
             catch (Exception exception)
             {
@@ -102,26 +105,51 @@ namespace ClubManager
             }
         }
 
-        private void btnRecomponer_Click(object sender, EventArgs e)
+        private void btnVolverMail_Click(object sender, EventArgs e)
         {
             try
             {
-                int idCambioSocio;
-                if (!int.TryParse(txtIdCambio.Text.Trim(), out idCambioSocio))
+                int idSocio;
+                int idHistorico;
+
+                if (!int.TryParse(txtIdSocio.Text.Trim(), out idSocio))
                 {
-                    MessageBox.Show("Ingresar un id de cambio válido.");
+                    MessageBox.Show("Ingresar o seleccionar un id de socio válido.");
+                    return;
+                }
+
+                if (!int.TryParse(txtIdHistorico.Text.Trim(), out idHistorico))
+                {
+                    MessageBox.Show("Ingresar o seleccionar un id histórico válido.");
                     return;
                 }
 
                 string usuario = SessionManager.SesionIniciada ? SessionManager.ObtenerUsuarioActual().Username : "SIN_SESION";
-                controlCambioBLL.RecomponerEstadoAnterior(idCambioSocio, usuario);
+                controlCambioBLL.VolverAlMailHistorico(idSocio, idHistorico, usuario);
                 btnBuscar_Click(sender, e);
-                MessageBox.Show("Estado anterior recompuesto correctamente.");
+                MessageBox.Show("Mail histórico restaurado correctamente.");
             }
             catch (Exception exception)
             {
                 MessageBox.Show(exception.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void dgvHistorialMail_SelectionChanged(object sender, EventArgs e)
+        {
+            if (dgvHistorialMail.CurrentRow == null || dgvHistorialMail.CurrentRow.DataBoundItem == null)
+            {
+                return;
+            }
+
+            HistorialBE historial = dgvHistorialMail.CurrentRow.DataBoundItem as HistorialBE;
+            if (historial == null)
+            {
+                return;
+            }
+
+            txtIdSocio.Text = historial.IdSocio.ToString();
+            txtIdHistorico.Text = historial.IdHistorico.ToString();
         }
     }
 }

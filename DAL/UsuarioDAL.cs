@@ -1,44 +1,21 @@
-<<<<<<< HEAD
-=======
-﻿using BE;
->>>>>>> origin/main
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-<<<<<<< HEAD
 using BE;
-=======
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
->>>>>>> origin/main
 
 namespace DAL
 {
     public class UsuarioDAL
     {
-<<<<<<< HEAD
         public int ActPass(UsuarioBE usuario)
         {
             Acceso acceso = new Acceso();
             acceso.Conectar();
-=======
-        public int ActPass(UsuarioBE usr)
-        {
-            Acceso acceso = new Acceso();
-
-            acceso.Conectar();
-
-            List<SqlParameter> parametros = new List<SqlParameter>();
-
->>>>>>> origin/main
             acceso.IniciarTx();
 
             try
             {
-<<<<<<< HEAD
                 List<SqlParameter> parametros = new List<SqlParameter>();
                 parametros.Add(acceso.CrearParametro("@usu", usuario.Username));
                 parametros.Add(acceso.CrearParametro("@nuevapass", usuario.Password));
@@ -62,39 +39,10 @@ namespace DAL
         {
             Acceso acceso = new Acceso();
             acceso.Conectar();
-=======
-                string sql = "ActualizaPass";
-                parametros.Clear();
-                parametros.Add(acceso.CrearParametro("@usu", usr.Username));
-                parametros.Add(acceso.CrearParametro("@nuevapass",usr.Password));
-                int resultado = acceso.Escribir(sql, parametros);
-                acceso.ConfirmarTx();
-                acceso.Desconectar();
-                return resultado;
-
-            }
-            catch(Exception ex)
-            {
-                acceso.CancelarTx();
-                acceso.Desconectar();
-                throw new Exception("Error al actualizar contraseña");
-            }
-        }
-
-        public int AltaUsuario(UsuarioBE usr)
-        {
-            Acceso acceso = new Acceso();
-
-            acceso.Conectar();
-
-            List<SqlParameter> parametros = new List<SqlParameter>();
-
->>>>>>> origin/main
             acceso.IniciarTx();
 
             try
             {
-<<<<<<< HEAD
                 SocioDAL socioDAL = new SocioDAL();
                 int resultadoSocio = socioDAL.AltaSocio(usuario, acceso);
 
@@ -163,6 +111,37 @@ namespace DAL
             }
         }
 
+
+        public UsuarioBE ObtenerPorIdSocio(int idSocio)
+        {
+            if (idSocio <= 0)
+            {
+                return null;
+            }
+
+            Acceso acceso = new Acceso();
+            acceso.Conectar();
+
+            try
+            {
+                List<SqlParameter> parametros = new List<SqlParameter>();
+                parametros.Add(acceso.CrearParametro("@idSocio", idSocio));
+
+                DataTable tabla = acceso.Leer("ObtenerUsuarioPorIdSocio", parametros);
+
+                if (tabla.Rows.Count == 0)
+                {
+                    return null;
+                }
+
+                return MapearUsuario(tabla.Rows[0]);
+            }
+            finally
+            {
+                acceso.Desconectar();
+            }
+        }
+
         public int IncrementarIntentosFallidos(string nombreUsuario)
         {
             return EjecutarOperacionUsuario("IncrementarIntentosFallidos", nombreUsuario);
@@ -191,6 +170,34 @@ namespace DAL
         public int DesactivarUsuario(string nombreUsuario)
         {
             return EjecutarOperacionUsuario("DesactivarUsuario", nombreUsuario);
+        }
+
+
+        public int CambiarRolPorIdSocio(int idSocio, int idRol)
+        {
+            Acceso acceso = new Acceso();
+            acceso.Conectar();
+            acceso.IniciarTx();
+
+            try
+            {
+                List<SqlParameter> parametros = new List<SqlParameter>();
+                parametros.Add(acceso.CrearParametro("@idSocio", idSocio));
+                parametros.Add(acceso.CrearParametro("@idRol", idRol));
+
+                int resultado = acceso.Escribir("CambiarRolUsuarioPorSocio", parametros);
+                acceso.ConfirmarTx();
+                return resultado;
+            }
+            catch
+            {
+                acceso.CancelarTx();
+                throw;
+            }
+            finally
+            {
+                acceso.Desconectar();
+            }
         }
 
         private int EjecutarOperacionUsuario(string procedimiento, string nombreUsuario)
@@ -257,12 +264,11 @@ namespace DAL
 
             if (fila.Table.Columns.Contains("IdRol") && fila["IdRol"] != DBNull.Value)
             {
-                usuario.Rol = new RolBE();
-                usuario.Rol.Id = Convert.ToInt32(fila["IdRol"]);
+                usuario.IdRol = Convert.ToInt32(fila["IdRol"]);
 
                 if (fila.Table.Columns.Contains("NombreRol") && fila["NombreRol"] != DBNull.Value)
                 {
-                    usuario.Rol.Nombre = fila["NombreRol"].ToString();
+                    usuario.NombreRol = fila["NombreRol"].ToString();
                 }
             }
 
@@ -281,92 +287,12 @@ namespace DAL
 
         private int ObtenerIdRol(UsuarioBE usuario)
         {
-            if (usuario.Rol != null && usuario.Rol.Id > 0)
+            if (usuario.IdRol > 0)
             {
-                return usuario.Rol.Id;
+                return usuario.IdRol;
             }
 
             return 2;
         }
-=======
-                SocioDAL socio = new SocioDAL();
-
-                int resultado = socio.AltaSocio(usr, acceso);
-
-                if(resultado != -1)
-                {
-                    //Doy de alta el usuario
-                    string sql = "RegistrarUsuario";
-                    parametros.Clear();
-                    parametros.Add(acceso.CrearParametro("@usuario", usr.Username));
-                    parametros.Add(acceso.CrearParametro("@password", usr.Password));
-                    parametros.Add(acceso.CrearParametro("@fechaCreacion", usr.FechaCreacion));
-                    parametros.Add(acceso.CrearParametro("@id", usr.IdSocio));
-                    parametros.Add(acceso.CrearParametro("@bloqueado", usr.Bloqueado));
-
-                    resultado = acceso.Escribir(sql, parametros);
-                    if (resultado != -1)
-                    {
-                        acceso.ConfirmarTx();
-                    }
-                    acceso.Desconectar();
-                    return resultado;
-                }else
-                {
-                    acceso.Desconectar();
-                    return resultado;
-                }
-
-            }
-            catch(Exception ex)
-            {
-                acceso.CancelarTx();
-                acceso.Desconectar();
-                throw new Exception("Error al registrar al usuario");
-            }
-
-        }
-
-        public UsuarioBE DevolverUser(string usrIngresado,string password=null)
-        {
-            Acceso acceso = new Acceso();
-            UsuarioBE usrAux = new UsuarioBE();
-            string sql;
-
-            acceso.Conectar();
-
-            List<SqlParameter> parametros = new List<SqlParameter>();
-            parametros.Clear();
-            parametros.Add(acceso.CrearParametro("@usu", usrIngresado));
-
-            if(password==null)
-            {
-                //Consulto si el usuario ya existe
-                sql = "ConsultaUsuario";
-                string usrConsultado = acceso.DevolverEscalarString(sql, parametros);
-                usrAux.Username = usrConsultado;
-            }
-            else
-            {
-                sql = "ConsultaUsrPass";
-                parametros.Add(acceso.CrearParametro("@pass", password));
-                DataTable tabla = new DataTable();
-                tabla = acceso.Leer(sql,parametros);
-
-                foreach (DataRow row in tabla.Rows)
-                {
-                    usrAux.Username = row["NombreUsuario"].ToString();
-                    usrAux.Password = row["Contraseña"].ToString();
-
-                }
-
-            }
-
-            acceso.Desconectar();
-
-            return usrAux;
-        }
-
->>>>>>> origin/main
     }
 }
