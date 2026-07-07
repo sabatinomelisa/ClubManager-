@@ -2,18 +2,11 @@
 using DAL;
 using System;
 using System.Collections.Generic;
-<<<<<<< HEAD
-=======
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
->>>>>>> origin/main
 
 namespace BLL
 {
     public class TraduccionBLL
     {
-<<<<<<< HEAD
         private readonly TraduccionDAL traduccionDAL;
         private readonly BitacoraBLL bitacoraBLL;
 
@@ -48,17 +41,6 @@ namespace BLL
             int resultado = traduccionDAL.GuardarTraduccion(idIdioma, nombreControl.Trim(), textoTraduccion.Trim());
             bitacoraBLL.RegistrarModificacion(usuario, "Idiomas", "Traducción actualizada para " + nombreControl + ".");
             return resultado;
-=======
-        public List<TraduccionBE> Listar(int idiomaSel)
-        {
-            TraduccionDAL tradDAL = new TraduccionDAL();
-
-            List<TraduccionBE> traducciones= new List<TraduccionBE>();
-
-            traducciones = tradDAL.ListarTraducciones(idiomaSel);
-
-            return traducciones;
->>>>>>> origin/main
         }
     }
 }

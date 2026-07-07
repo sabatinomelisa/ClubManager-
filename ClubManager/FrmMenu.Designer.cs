@@ -35,10 +35,11 @@
             // menuStrip1
             // 
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.menuStrip1.Location = new System.Drawing.Point(0, 24);
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(800, 24);
             this.menuStrip1.TabIndex = 0;
+            this.menuStrip1.Visible = true;
             this.menuStrip1.Text = "menuStrip1";
             // 
             // menuStrip2
@@ -48,6 +49,7 @@
             this.menuStrip2.Name = "menuStrip2";
             this.menuStrip2.Size = new System.Drawing.Size(800, 24);
             this.menuStrip2.TabIndex = 1;
+            this.menuStrip2.Visible = false;
             this.menuStrip2.Text = "menuStrip2";
             // 
             // FrmMenu

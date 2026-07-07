@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-using BE;
+﻿using SERVICIOS.Composite;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -8,17 +7,17 @@ namespace DAL
 {
     public class RolDAL
     {
-        public List<RolBE> ListarRoles()
+        public List<Rol> ListarRoles()
         {
             Acceso acceso = new Acceso();
             acceso.Conectar();
 
             DataTable resultado = acceso.Leer("ConsultarRoles", new List<SqlParameter>());
-            List<RolBE> roles = new List<RolBE>();
+            List<Rol> roles = new List<Rol>();
 
             foreach (DataRow filaRol in resultado.Rows)
             {
-                RolBE rol = new RolBE();
+                Rol rol = new Rol();
                 rol.Id = int.Parse(filaRol["IdRol"].ToString());
                 rol.Nombre = filaRol["Nombre"].ToString();
                 roles.Add(rol);
@@ -28,12 +27,12 @@ namespace DAL
             return roles;
         }
 
-        public RolBE ObtenerRol(int idRol)
+        public Rol ObtenerRol(int idRol)
         {
             Acceso acceso = new Acceso();
             acceso.Conectar();
 
-            RolBE rol = ObtenerRolPorId(idRol, acceso);
+            Rol rol = ObtenerRolPorId(idRol, acceso);
 
             if (rol.Id > 0)
             {
@@ -44,13 +43,13 @@ namespace DAL
             return rol;
         }
 
-        private RolBE ObtenerRolPorId(int idRol, Acceso acceso)
+        private Rol ObtenerRolPorId(int idRol, Acceso acceso)
         {
             List<SqlParameter> parametros = new List<SqlParameter>();
             parametros.Add(acceso.CrearParametro("@id", idRol));
 
             DataTable resultado = acceso.Leer("ConsultarRol", parametros);
-            RolBE rol = new RolBE();
+            Rol rol = new Rol();
 
             foreach (DataRow filaRol in resultado.Rows)
             {
@@ -61,7 +60,7 @@ namespace DAL
             return rol;
         }
 
-        private void CargarComponentesDeRol(RolBE rolPadre, Acceso acceso, List<int> rolesVisitados)
+        private void CargarComponentesDeRol(Rol rolPadre, Acceso acceso, List<int> rolesVisitados)
         {
             if (rolesVisitados.Contains(rolPadre.Id))
             {
@@ -81,7 +80,7 @@ namespace DAL
 
                 if (tipoComponente == "ROL")
                 {
-                    RolBE rolHijo = new RolBE();
+                    Rol rolHijo = new Rol();
                     rolHijo.Id = int.Parse(filaComponente["IdComponente"].ToString());
                     rolHijo.Nombre = filaComponente["Nombre"].ToString();
 
@@ -90,62 +89,12 @@ namespace DAL
                 }
                 else
                 {
-                    PermisoBE permiso = new PermisoBE();
+                    Permiso permiso = new Permiso();
                     permiso.Id = int.Parse(filaComponente["IdComponente"].ToString());
                     permiso.Nombre = filaComponente["Nombre"].ToString();
                     rolPadre.AgregarComponente(permiso);
                 }
             }
         }
-=======
-﻿using BE;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DAL
-{
-    public  class RolDAL
-    {
-        public RolBE ObtenerRol(int idRol)
-        {
-            RolBE rol = new RolBE();
-
-            Acceso acceso = new Acceso();
-
-            acceso.Conectar();
-
-            List<SqlParameter> parametros = new List<SqlParameter>();
-            string sql = "ConsultarRol";
-            parametros.Add(acceso.CrearParametro("@id", idRol));
-
-            DataTable respuesta = new DataTable();
-
-            respuesta = acceso.Leer(sql,parametros);
-
-            foreach (DataRow row in respuesta.Rows)
-            {
-                rol.Id = int.Parse(row["IdRol"].ToString());
-                rol.Nombre = row["Nombre"].ToString();
-            }
-
-            PermisoDAL permisoDAL = new PermisoDAL();
-
-            List<PermisoBE> permisos = permisoDAL.ObtenerPermisos(rol,acceso);
-
-            foreach(PermisoBE p in permisos)
-            {
-                rol.Hijos.Add(p);
-            }
-
-            acceso.Desconectar();
-
-            return rol;
-        }
->>>>>>> origin/main
     }
 }

@@ -1,11 +1,11 @@
-using System.Configuration;
+﻿using System.Configuration;
 
-namespace DAL
+namespace SERVICIOS
 {
     public sealed class ConnectionStringProvider
     {
         private const string NombreConnectionString = "ClubManagerDatabase";
-        private const string ConnectionStringDefault = "Data Source=DESKTOP-BJDMH9N\\SQLEXPRESS;Initial Catalog=Club Manager;Integrated Security=True;TrustServerCertificate=True;";
+        private const string ConnectionStringDefault = "Data Source=.\\SQLEXPRESS;Initial Catalog=Club Manager;Integrated Security=True;TrustServerCertificate=True;";
         private static readonly ConnectionStringProvider instancia = new ConnectionStringProvider();
 
         private ConnectionStringProvider()

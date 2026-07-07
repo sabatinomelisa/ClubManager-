@@ -1,20 +1,7 @@
-<<<<<<< HEAD
-using System;
-using System.Windows.Forms;
-using BLL;
-=======
-﻿using BE;
-using BLL;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+﻿using System;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
->>>>>>> origin/main
+using BLL;
 
 namespace ClubManager
 {
@@ -23,24 +10,31 @@ namespace ClubManager
         public FrmOlvidaste()
         {
             InitializeComponent();
+            ConfigurarMensajeResultado();
+            PasswordVisibilityHelper.AgregarBoton(this, txtViejaPass);
+            PasswordVisibilityHelper.AgregarBoton(this, txtNuevaPass);
+        }
+
+        private void ConfigurarMensajeResultado()
+        {
+            lblResultado.AutoSize = false;
+            lblResultado.BackColor = Color.Transparent;
+            lblResultado.ForeColor = Color.White;
+            lblResultado.Width = 650;
+            lblResultado.Height = 55;
+            lblResultado.Left = 307;
+            lblResultado.Top = 394;
+            lblResultado.TextAlign = ContentAlignment.MiddleLeft;
+            lblResultado.BringToFront();
         }
 
         private void btnVolver_Click(object sender, EventArgs e)
         {
-<<<<<<< HEAD
-            FrmInicio inicio = new FrmInicio();
-            inicio.Show();
             Close();
-=======
-            //Mostrar el FrmInicio
-            FrmInicio ini = new FrmInicio();
-            ini.Show();
->>>>>>> origin/main
         }
 
         private void btnCambiarPass_Click(object sender, EventArgs e)
         {
-<<<<<<< HEAD
             try
             {
                 UsuarioBLL usuarioBLL = new UsuarioBLL();
@@ -61,27 +55,6 @@ namespace ClubManager
             {
                 lblResultado.Text = exception.Message;
             }
-=======
-            UsuarioBLL usrBLL = new UsuarioBLL();
-
-            bool usrOk = usrBLL.ValidarUsuario(txtUsuario.Text, txtNuevaPass.Text);
-
-            if(usrOk)
-            {
-                UsuarioBE usrNuevo = new UsuarioBE();
-                usrNuevo.Username = txtUsuario.Text;
-                usrNuevo.Password = txtNuevaPass.Text;
-                int filas = usrBLL.CambiarContraseña(usrNuevo);
-                if (filas > 0)
-                {
-                    lblResultado.Text = "Contraseña Actualizada";
-                }else
-                {
-                    lblResultado.Text = "Error al actualizar la contraseña";
-                }
-            }
-
->>>>>>> origin/main
         }
     }
 }
