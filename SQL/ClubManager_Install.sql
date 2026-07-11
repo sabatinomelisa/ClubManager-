@@ -703,13 +703,24 @@ GO
 CREATE PROCEDURE dbo.RegistrarHistorialMailSocio @idSocio INT, @mail VARCHAR(100) AS
 BEGIN
     DECLARE @idHistorico INT;
+    DECLARE @ultimoMail VARCHAR(100);
+
+    SELECT TOP 1 @ultimoMail = Email
+    FROM dbo.HistorialSocio
+    WHERE IdSocio = @idSocio
+    ORDER BY FechaCreacion DESC, IdHistorico DESC;
+
+    IF @ultimoMail IS NOT NULL AND LOWER(LTRIM(RTRIM(@ultimoMail))) = LOWER(LTRIM(RTRIM(@mail)))
+    BEGIN
+        RETURN;
+    END
 
     SELECT @idHistorico = ISNULL(MAX(IdHistorico), 0) + 1
     FROM dbo.HistorialSocio
     WHERE IdSocio = @idSocio;
 
     INSERT INTO dbo.HistorialSocio (IdHistorico, IdSocio, Email, FechaCreacion)
-    VALUES (@idHistorico, @idSocio, @mail, GETDATE());
+    VALUES (@idHistorico, @idSocio, LTRIM(RTRIM(@mail)), GETDATE());
 END
 GO
 

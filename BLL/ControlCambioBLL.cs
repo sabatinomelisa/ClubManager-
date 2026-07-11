@@ -10,12 +10,14 @@ namespace BLL
         private readonly ControlCambioDAL controlCambioDAL;
         private readonly SocioDAL socioDAL;
         private readonly BitacoraBLL bitacoraBLL;
+        private readonly IntegridadBLL integridadBLL;
 
         public ControlCambioBLL()
         {
             controlCambioDAL = new ControlCambioDAL();
             socioDAL = new SocioDAL();
             bitacoraBLL = new BitacoraBLL();
+            integridadBLL = new IntegridadBLL();
         }
 
         public void RegistrarMailInicialSocio(SocioBE socio, string usuario)
@@ -77,8 +79,8 @@ namespace BLL
                 throw new Exception("El socio ya tiene asignado ese mail.");
             }
 
-            RegistrarMailHistorico(idSocio, mailActual);
-            socioDAL.ActualizarMailSocio(idSocio, mailHistorico);
+            controlCambioDAL.RestaurarMailHistorico(idSocio, mailActual, mailHistorico);
+            integridadBLL.RecalcularIntegridad();
             bitacoraBLL.Registrar(usuario, "RESTAURAR_MAIL", "Control de Cambios", "Se restauró el mail histórico del socio " + idSocio + ".");
         }
 
@@ -89,9 +91,22 @@ namespace BLL
                 return;
             }
 
+            string mailNormalizado = mail.Trim();
+
+            List<HistorialBE> historialExistente = controlCambioDAL.ListarHistorialMailSocio(idSocio);
+            if (historialExistente.Count > 0)
+            {
+                string ultimoMailHistorico = historialExistente[0].Mail == null ? string.Empty : historialExistente[0].Mail.Trim();
+
+                if (string.Equals(ultimoMailHistorico, mailNormalizado, StringComparison.OrdinalIgnoreCase))
+                {
+                    return;
+                }
+            }
+
             HistorialBE historial = new HistorialBE();
             historial.IdSocio = idSocio;
-            historial.Mail = mail.Trim();
+            historial.Mail = mailNormalizado;
             controlCambioDAL.RegistrarMailHistorico(historial);
         }
     }

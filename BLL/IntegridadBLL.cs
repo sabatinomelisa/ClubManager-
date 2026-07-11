@@ -36,8 +36,9 @@ namespace BLL
 
         public void ActualizarIntegridadParaLogout()
         {
-            RecalcularIntegridad();
+            InicializarSiCorresponde();
             ValidarIntegridadObligatoria("logout");
+            RecalcularIntegridad();
         }
 
         private void ValidarIntegridadObligatoria(string operacion)

@@ -12,12 +12,14 @@ namespace BLL
         private readonly UsuarioDAL usuarioDAL;
         private readonly BitacoraBLL bitacoraBLL;
         private readonly IntegridadBLL integridadBLL;
+        private readonly ControlCambioBLL controlCambioBLL;
 
         public UsuarioBLL()
         {
             usuarioDAL = new UsuarioDAL();
             bitacoraBLL = new BitacoraBLL();
             integridadBLL = new IntegridadBLL();
+            controlCambioBLL = new ControlCambioBLL();
         }
 
         public int AltaUsuario(UsuarioBE usuario)
@@ -32,6 +34,7 @@ namespace BLL
             if (resultado > 0)
             {
                 integridadBLL.RecalcularIntegridad();
+                controlCambioBLL.RegistrarMailInicialSocio(usuario, usuario.Username);
                 bitacoraBLL.RegistrarAlta(usuario.Username, "Usuarios", "Usuario registrado correctamente.");
             }
 

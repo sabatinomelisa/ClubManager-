@@ -75,6 +75,78 @@ namespace DAL
             return null;
         }
 
+        public void RestaurarMailHistorico(int idSocio, string mailActual, string mailHistorico)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                using (SqlTransaction transaction = connection.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SqlCommand actualizarMail = new SqlCommand("ActualizarMailSocio", connection, transaction))
+                        {
+                            actualizarMail.CommandType = CommandType.StoredProcedure;
+                            actualizarMail.Parameters.Add("@idSocio", SqlDbType.Int).Value = idSocio;
+                            actualizarMail.Parameters.Add("@mail", SqlDbType.VarChar, 100).Value = mailHistorico.Trim();
+
+                            int filasAfectadas = actualizarMail.ExecuteNonQuery();
+                            if (filasAfectadas <= 0)
+                            {
+                                throw new Exception("No se pudo restaurar el mail histórico seleccionado.");
+                            }
+                        }
+
+                        string ultimoMailHistorico = null;
+                        using (SqlCommand obtenerUltimoMail = new SqlCommand(@"
+                            SELECT TOP 1 Email
+                            FROM dbo.HistorialSocio
+                            WHERE IdSocio = @idSocio
+                            ORDER BY FechaCreacion DESC, IdHistorico DESC", connection, transaction))
+                        {
+                            obtenerUltimoMail.Parameters.Add("@idSocio", SqlDbType.Int).Value = idSocio;
+                            object valor = obtenerUltimoMail.ExecuteScalar();
+                            ultimoMailHistorico = valor == null || valor == DBNull.Value ? null : valor.ToString();
+                        }
+
+                        bool debeGuardarMailActual = string.IsNullOrWhiteSpace(ultimoMailHistorico)
+                            || !string.Equals(ultimoMailHistorico.Trim(), mailActual.Trim(), StringComparison.OrdinalIgnoreCase);
+
+                        if (debeGuardarMailActual)
+                        {
+                            int idHistorico;
+                            using (SqlCommand obtenerSiguienteId = new SqlCommand(@"
+                                SELECT ISNULL(MAX(IdHistorico), 0) + 1
+                                FROM dbo.HistorialSocio
+                                WHERE IdSocio = @idSocio", connection, transaction))
+                            {
+                                obtenerSiguienteId.Parameters.Add("@idSocio", SqlDbType.Int).Value = idSocio;
+                                idHistorico = Convert.ToInt32(obtenerSiguienteId.ExecuteScalar());
+                            }
+
+                            using (SqlCommand insertarHistorial = new SqlCommand(@"
+                                INSERT INTO dbo.HistorialSocio (IdHistorico, IdSocio, Email, FechaCreacion)
+                                VALUES (@idHistorico, @idSocio, @mail, GETDATE())", connection, transaction))
+                            {
+                                insertarHistorial.Parameters.Add("@idHistorico", SqlDbType.Int).Value = idHistorico;
+                                insertarHistorial.Parameters.Add("@idSocio", SqlDbType.Int).Value = idSocio;
+                                insertarHistorial.Parameters.Add("@mail", SqlDbType.VarChar, 100).Value = mailActual.Trim();
+                                insertarHistorial.ExecuteNonQuery();
+                            }
+                        }
+
+                        transaction.Commit();
+                    }
+                    catch
+                    {
+                        transaction.Rollback();
+                        throw;
+                    }
+                }
+            }
+        }
+
         private HistorialBE MapearHistorial(SqlDataReader reader)
         {
             HistorialBE historial = new HistorialBE();
